@@ -29,6 +29,6 @@ Graphically illustrate how many wines of each class were correctly predicted.
 - [ ] [Pandas](https://pandas.pydata.org/) : a data analysis library that provides a concept called dataframe. A dataframe is two-dimentional datastructrure similar to an excel spreadsheet. 
 - [ ] [MatPlotLib](https://matplotlib.org/) : a two-dimentional plotting library for creating static, animated, and interactive visualizations with Python.
 - [ ] [Scikit-Learn]() : the most popular machine learning library that provide all the common algorithms like decision-trees, neuronetworks and so on.
-- [ ] [Jupyter Notebook](hhttps://jupyter.org/) : an environment for writing our code.
+- [ ] [Jupyter Notebook](https://jupyter.org/) : is an environment for writing our code.
     - It is more convenient than editors like VS Code for machinelearning projects, because it can better display long row of data.
     - It is installed via the installation of the Anaconda distribution.
