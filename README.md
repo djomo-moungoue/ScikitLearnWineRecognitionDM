@@ -3,10 +3,8 @@ Objectif : Analyser le [jeu de données Scikit-learn sur le vin](https://scikitl
 |Table of Contents|
 |---|
 |[Configuration requise](#Configuration-requise)|
-|[<pre>  Miniconda</pre>](#Miniconda)|
-|[  Pandas](#Pandas)|
-|[  Pandas<br/>](#Pandas)|
-|[  Pandas](#Pandas)|
+|[&nbsp;Miniconda](#Miniconda)|
+|[&nbsp;&nbsp;Pandas](#Pandas)|
 |[Configurer l'environment de developpement](#Configurer-l'environment-de-developpement)|
 |[Charger/importer les données (1)](#Charger/importer-les-données-(1))|
 |[Clean the data](#Clean-the-data)|
