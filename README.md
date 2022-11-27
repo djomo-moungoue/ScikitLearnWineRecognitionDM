@@ -2,29 +2,6 @@
 
 Objectif : Analyser le [jeu de données Scikit-learn sur le vin](https://scikitlearn.org/stable/modules/generated/sklearn.datasets.load_wine.html) et utiliser les propriétés pour prédire la variété du vin.
 
-# Charger/importer les données (1)
-Chargez les données en mémoire, puis traitez-les. (sklearn.datasets.load_wine())
-
-# Clean the data
-
-# Divisez les données en ensembles de formation et de test (2).
-Veillez à ce que les données soient divisées de manière aléatoire et que les classes soient équilibrées. 70% des données doivent être utilisées pour la formation.
-
-# Créer un modèle
-
-# Entraîner (le modèle) un algorithme approprié (3)
-Sélectionnez un algorithme approprié pour prédire les variétés de vin. Entraînez l'algorithme.
-
-# Tester l'algorithme sur les données de test. (4)
-Calculez au moins une mesure de l'exactitude de la prédiction.
-
-# Faites des prédictions
-
-# Illustrez votre résultat (5)
-Illustrez graphiquement le nombre de vins de chaque classe qui ont été correctement prédits. 
-
----
-
 # Configuration requise
 
 ## [Miniconda](https://docs.conda.io/en/latest/miniconda.html)
@@ -119,3 +96,28 @@ Installer les librairies requises dans l'environnement de travail
 ~~~
 (wine_dataset) USER_ROOT> conda install pandas matplotlib scikit-learn jupyter
 ~~~
+
+---
+
+# Charger/importer les données (1)
+Chargez les données en mémoire, puis traitez-les. (sklearn.datasets.load_wine())
+
+# Clean the data
+
+# Divisez les données en ensembles de formation et de test (2).
+Veillez à ce que les données soient divisées de manière aléatoire et que les classes soient équilibrées. 70% des données doivent être utilisées pour la formation.
+
+# Créer un modèle
+
+# Entraîner (le modèle) un algorithme approprié (3)
+Sélectionnez un algorithme approprié pour prédire les variétés de vin. Entraînez l'algorithme.
+
+# Tester l'algorithme sur les données de test. (4)
+Calculez au moins une mesure de l'exactitude de la prédiction.
+
+# Faites des prédictions
+
+# Illustrez votre résultat (5)
+Illustrez graphiquement le nombre de vins de chaque classe qui ont été correctement prédits. 
+
+---
