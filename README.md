@@ -122,13 +122,13 @@ Installer les librairies requises dans l'environnement de travail
 (wine_dataset) USER_ROOT> conda install pandas matplotlib scikit-learn jupyter
 ~~~
 
-Démarrer Jupyter: Interactive Computing
+Démarrer Jupyter dans le navigateur web par défaut: Interactive Computing
 usage: jupyter [-h] [--version] [--config-dir] [--data-dir] [--runtime-dir] [--paths] [--json] [--debug]
                [subcommand]
 The Jupyter HTML Notebook. This launches a Tornado based HTML Notebook Server that serves up an
 HTML5/Javascript Notebook client.
 ~~~
-(wine_dataset) C:\Users\yesse> jupyter notebook
+(wine_dataset) Project_ROOT> jupyter notebook
 ~~~
 
 options:
@@ -179,7 +179,6 @@ Available subcommands:
     - list : List currently running notebook servers.
     - stop : Stop currently running notebook server.
     - password : Set a password for the notebook server.
-
 - [ ] qtconsole 
 - [ ] run 
 - [ ] script 
@@ -187,6 +186,8 @@ Available subcommands:
 - [ ] serverextension 
 - [ ] troubleshoot 
 - [ ] trust
+
+Créer un Notebook et le renommer 'Wine Dataset'
 
 ---
 
