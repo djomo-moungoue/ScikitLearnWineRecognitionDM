@@ -1,26 +1,27 @@
 # MachineLearningZa
-Goal : Analyze the [Sklearn wine dataset](https://scikitlearn.org/stable/modules/generated/sklearn.datasets.load_wine.html) and use the properties to predict the variety of the wine.
 
-# Load/import the data (1)
-Load the data into memory and then process the data. (sklearn.datasets.load_wine())
+Objectif : Analyser le [jeu de données Scikit-learn sur le vin](https://scikitlearn.org/stable/modules/generated/sklearn.datasets.load_wine.html) et utiliser les propriétés pour prédire la variété du vin.
+
+# Charger/importer les données (1)
+Chargez les données en mémoire, puis traitez-les. (sklearn.datasets.load_wine())
 
 # Clean the data
 
-# Split the data into training and test sets (2)
-Please make sure that the data is divided randomly and that the classes are balanced. 70% of the data should be used for training.
+# Divisez les données en ensembles de formation et de test (2).
+Veillez à ce que les données soient divisées de manière aléatoire et que les classes soient équilibrées. 70% des données doivent être utilisées pour la formation.
 
-# Create a model
+# Créer un modèle
 
-# Train (the model) a suitable algorithm (3)
-Select a suitable algorithm to predict the varieties of wine. Train the algorithm.
+# Entraîner (le modèle) un algorithme approprié (3)
+Sélectionnez un algorithme approprié pour prédire les variétés de vin. Entraînez l'algorithme.
 
-# Test the algorithm on the test data. (4)
-Calculate at least one measure of the accuracy of the prediction.
+# Tester l'algorithme sur les données de test. (4)
+Calculez au moins une mesure de l'exactitude de la prédiction.
 
-# Make predictions
+# Faites des prédictions
 
-# Illustrate your result (5)
-Graphically illustrate how many wines of each class were correctly predicted. 
+# Illustrez votre résultat (5)
+Illustrez graphiquement le nombre de vins de chaque classe qui ont été correctement prédits. 
 
 ---
 
