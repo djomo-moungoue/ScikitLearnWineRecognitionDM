@@ -5,6 +5,9 @@ Objectif : Analyser le [jeu de données Scikit-learn sur le vin](https://scikitl
 |[Configuration requise](#Configuration-requise)|
 |[&nbsp;&nbsp;&nbsp;&nbsp;Miniconda](#Miniconda)|
 |[&nbsp;&nbsp;&nbsp;&nbsp;Pandas](#Pandas)|
+|[&nbsp;&nbsp;&nbsp;&nbsp;MatPlotLib](#MatPlotLib)|
+|[&nbsp;&nbsp;&nbsp;&nbsp;Scikit-Learn](#Scikit-Learn)|
+|[&nbsp;&nbsp;&nbsp;&nbsp;Jupyter](#Jupyter)|
 |[Configurer l'environment de developpement](#Configurer-l'environment-de-developpement)|
 |[Charger/importer les données (1)](#Charger/importer-les-données-(1))|
 |[Clean the data](#Clean-the-data)|
@@ -56,7 +59,7 @@ Pandas est une bibliothèque Python populaire pour l'analyse des données. Elle 
 - [x] `pandas`
 
 
-## [Matplotlib](https://matplotlib.org/) 
+## [MatPlotLib](https://matplotlib.org/) 
 Matplotlib est une bibliothèque Python très populaire pour la visualisation de données. Comme Pandas, elle n'est pas directement liée à l'apprentissage automatique. Elle s'avère particulièrement utile lorsqu'un programmeur souhaite visualiser les modèles dans les données. Il s'agit d'une bibliothèque de traçage en 2D utilisée pour créer des graphiques et des tracés en 2D. Un module appelé pyplot facilite la tâche des programmeurs en matière de traçage, car il fournit des fonctionnalités permettant de contrôler les styles de lignes, les propriétés des polices, le formatage des axes, etc. Il fournit différents types de graphiques et de tracés pour la visualisation des données, à savoir des histogrammes, des diagrammes d'erreur, des barres de données, etc, 
 - [x] (1-6)
 - [x] `fonttools`
@@ -66,7 +69,7 @@ Matplotlib est une bibliothèque Python très populaire pour la visualisation de
 - [x] (*)
 
 
-## [Scikit-learn](https://scikit-learn.org/stable/index.html)
+## [Scikit-Learn](https://scikit-learn.org/stable/index.html)
 Scikit-learn est l'une des bibliothèques ML les plus populaires pour les algorithmes ML classiques. Elle est construite à partir de deux bibliothèques Python de base, à savoir NumPy et SciPy. Scikit-learn prend en charge la plupart des algorithmes d'apprentissage supervisé et non supervisé. Scikit-learn peut également être utilisé pour l'exploration et l'analyse de données, ce qui en fait un outil idéal pour les débutants en ML.
 - [x] (1-6)
 - [x] (*)
