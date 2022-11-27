@@ -5,6 +5,8 @@ Objectif : Analyser le [jeu de données Scikit-learn sur le vin](https://scikitl
 |[Configuration requise](#Configuration-requise)|
 |[<pre>  Miniconda</pre>](#Miniconda)|
 |[  Pandas](#Pandas)|
+|[  Pandas<br/>](#Pandas)|
+|[  Pandas](#Pandas)|
 |[Configurer l'environment de developpement](#Configurer-l'environment-de-developpement)|
 |[Charger/importer les données (1)](#Charger/importer-les-données-(1))|
 |[Clean the data](#Clean-the-data)|
@@ -14,10 +16,6 @@ Objectif : Analyser le [jeu de données Scikit-learn sur le vin](https://scikitl
 |[Tester l'algorithme sur les données de test (4)](#Tester-l'algorithme-sur-les-données-de-test-(4))|
 |[Faites des prédictions](#Faites-des-prédictions)|
 |[Illustrez votre résultat (5)](#Illustrez-votre-résultat-(5))|
-|The action of every agent <br />|
-|  into the world <br />|
-|starts <br />|
-|  from their physical selves. <br />|
 
 # Configuration requise
 
