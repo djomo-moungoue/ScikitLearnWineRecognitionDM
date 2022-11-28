@@ -43,17 +43,17 @@ Si vous avez utilisé pip et virtualenv dans le passé, vous pouvez utiliser con
 - virtualenv est un gestionnaire d'environnement. 
 - conda et pipenv gère les paquets et l'environnement. `Conda` or `pipenv` == `pip` + `virtualenv`
 
-|Propriétés|conda|pipenv|
+|critères|conda|pipenv|
 |--|--|--|
 |Processus de mise en marche (1)|1|1|
 |Disponibilité des paquets (2)|1|1|
-|Résolution des dépendances (3)|1|0|
-|Version de Python (4)|1|0|
-|Spécification des dépendances (5)|||
-|Espace disque (6)|||
-|Sécurité (7)|||
-|Longivité (8)|||
-|Personnalisation (9)|||
+|Gérer la résolution des dépendances (3)|1|0|
+|Gérer les versions de Python (4)|1|0|
+|Rérer la spécification des dépendances (5)|||
+|Occuper l'espace disque de facon optimale (6)|||
+|Garantir la sécurité (7)|||
+|Assurer la longivité (8)|||
+|Personnaliser (9)|||
 |Divers (10)|||
 
 (1) Démarrer avec conda et pipenv
