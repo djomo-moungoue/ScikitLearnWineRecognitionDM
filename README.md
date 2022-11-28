@@ -43,18 +43,18 @@ Si vous avez utilisé pip et virtualenv dans le passé, vous pouvez utiliser con
 - virtualenv est un gestionnaire d'environnement. 
 - conda et pipenv gère les paquets et l'environnement. `Conda` or `pipenv` == `pip` + `virtualenv`
 
-|critères|conda|pipenv|
+|critères|conda (dans Ana-/Miniconda)|pipenv (dans PyPI)|
 |--|--|--|
-|Processus de mise en marche (1)|1|1|
-|Disponibilité des paquets (2)|1|1|
-|Gérer la résolution des dépendances (3)|1|0|
-|Gérer les versions de Python (4)|1|0|
-|Rérer la spécification des dépendances (5)|||
-|Occuper l'espace disque de facon optimale (6)|||
-|Garantir la sécurité (7)|||
-|Assurer la longivité (8)|||
-|Personnaliser (9)|||
-|Divers (10)|||
+|Le processus de mise en marche est-il simple? (1)|1|1|
+|Les paquets élémentaires sont-ils disponibles? (2)|1|1|
+|La résolution des dépendances est-elle correcte? (3)|1|0|
+|La gestion des versions de Python est-elle correcte? (4)|1|0|
+|La spécification des dépendances est-elle reproductible? (5)|0|1|
+|L'espace disque occupé est-il optimal? (6)|0|1|
+|L'installation des paquets est-elle sécurisée (7)|1|0|
+|Longivité : Conda/pipenv est-il là pour rester ? Quelle est sa maturité ? Qui le supporte ? (8)|||
+|Y-t-il de la transparence lors de l'installation des paquets ? (9)|1|0|
+|Les environnement sont-t-il automatiquement créer/actualisés (10)|0|1|
 
 (1) Démarrer avec conda et pipenv
 
@@ -132,6 +132,41 @@ Si vous avez utilisé pip et virtualenv dans le passé, vous pouvez utiliser con
 
 (6) Combien d'espace les environnements prennent-ils ? Le partage peut-il aider ?
 
+    Les environnements Python utilisés par les analystes des données ont tendance à être volumineux, en particulier les environnements Conda. Par exemple, un environnement conda avec jupyter et pandas occupe 1,7 Go, tandis qu'un environnement pipenv équivalent occupe 208 Mo. Bien que cela ne concerne pas la plupart des environnements de développement, cela peut devenir plus important en production, par exemple lors de l'utilisation de conteneurs [Plus ...](https://towardsdatascience.com/how-to-shrink-numpy-scipy-pandas-and-matplotlib-for-your-data-product-4ec8d7e86ee4)
+
+    En raison de leur taille importante, les spécialistes des données utilisent souvent un environnement conda dans plusieurs projets exploratoires, voire dans plusieurs projets de production faisant partie de la même solution [Plus ...](https://stackoverflow.com/questions/55892572/keeping-the-same-shared-virtualenvs-when-switching-from-pyenv-virtualenv-to-pip)
+    L'environnement conda peut être créé, activé et utilisé depuis n'importe quel endroit.
+
+    Un environnement pipenv est lié à un référentiel de projet. Une fois créé, Pipenv enregistre les pipfiles à la racine du référentiel. Les paquets installés sont sauvegardés dans ~/.local/share/.virtualenvs / par défaut, où pipenv s'assure qu'un environnement est créé par repo en créant un nouveau répertoire et en ajoutant un hash du chemin au nom (i.e. my_project-a3de50). L'utilisateur doit se rendre à la racine du dépôt du projet pour activer l'environnement, mais le shell restera activé même si vous quittez le répertoire. Il est possible de partager un environnement entre plusieurs projets en stockant les Pipfiles dans un répertoire séparé. L'utilisateur doit alors se souvenir de se rendre dans le référentiel pour activer et mettre à jour l'environnement.
+
+(7) L'installation des paquets est-elle sécurisée
+
+    Le canal principal d'[Anaconda](https://anaconda.org/anaconda/) est maintenu par des employés d'Anaconda et les paquets passent par un contrôle de sécurité strict avant d'être téléchargés. 
+
+    Dans le cas de pipenv qui utilise PyPI, n'importe qui peut télécharger n'importe quel paquet et des paquets malveillants ont été découverts dans le passé [voir](https://www.zdnet.com/article/twelve-malicious-python-libraries-found-and-removed-from-pypi/). 
+    
+    Il en va de même pour [conda-forge](https://conda-forge.org/), bien qu'ils soient en train de développer un processus pour valider les artefacts avant qu'ils ne soient téléchargés vers le dépôt.
+
+    Les solutions de contournement sont les suivantes :
+    - Effectuer des contrôles de sécurité en utilisant des outils comme [x-ray](https://jfrog.com/xray/)
+    - N'installer que des paquets datant d'au moins un mois afin de laisser suffisamment de temps pour trouver et résoudre les problèmes.
+
+(8) Conda/pipenv est-il là pour rester ? Quelle est sa maturité ? Qui le supporte ?
+
+    Conda/Anaconda a été créé en 2012 par la même équipe que scipy.org, qui gère la pile scipy. Conda est un outil open source, mais le référentiel anaconda est hébergé par Anaconda Inc, une organisation à but lucratif. Si conda/anaconda ne risque pas de disparaître de sitôt, cette situation a suscité des inquiétudes quant à la possibilité qu'Anaconda Inc. commence à faire payer les utilisateurs. Ils ont récemment modifié leurs conditions générales pour faire payer les utilisateurs lourds ou commerciaux, ce qui inclut la mise en miroir du référentiel anaconda. Notez que les nouvelles conditions ne s'appliquent pas au canal conda-forge.
+    
+    Pipenv a été présenté pour la première fois en 2017 par le créateur de la populaire bibliothèque requests. Pipenv n'a pas publié de nouveau code entre novembre 2018 et mai 2020, ce qui a suscité des inquiétudes quant à son avenir [Plus ...](https://medium.com/telnyx-engineering/rip-pipenv-tried-too-hard-do-what-you-need-with-pip-tools-d500edc161d4). Pipenv a maintenant été repris par de nouveaux développeurs et est mis à jour plus régulièrement avec des versions mensuelles depuis mai 2020.
+
+(9) Y-t-il de la transparence lors de l'installation des paquets ?
+
+Conda résout et imprime les paquets qui seront installés avant de les installer, donnant aux utilisateurs la possibilité de poursuivre ou de reconsidérer avant de passer par la longue procédure d'installation.
+
+Changer le nom/chemin du répertoire du projet rompt l'environnement pipenv et un nouvel environnement est automatiquement créé [voir](https://github.com/pypa/pipenv/issues/796)
+
+(10) L'environnement est-t-il créé / mis à jour automatiquement ?
+
+Conda ne crée pas/met à jour automatiquement le fichier environment.yaml, contrairement à pipenv qui met à jour le Pipfile. Il est donc possible que votre environnement et votre fichier environment.yaml soient désynchronisés si vous oubliez de mettre à jour votre fichier environment.yaml.
+
 
 ### Librairies installées dans l'environnement (base)
 - [x] `ca-certificates`(1)
@@ -152,7 +187,6 @@ Pandas est une bibliothèque Python populaire pour l'analyse des données. Elle 
 - [x] [Numpy](www.numpy.org) : NumPy est une bibliothèque python très populaire pour le traitement de grands tableaux multidimensionnels et de matrices, à l'aide d'une grande collection de fonctions mathématiques de haut niveau. (***)
 - [x] `pandas`
 
-
 ## [MatPlotLib](https://matplotlib.org/) 
 Matplotlib est une bibliothèque Python très populaire pour la visualisation de données. Comme Pandas, elle n'est pas directement liée à l'apprentissage automatique. Elle s'avère particulièrement utile lorsqu'un programmeur souhaite visualiser les modèles dans les données. Il s'agit d'une bibliothèque de traçage en 2D utilisée pour créer des graphiques et des tracés en 2D. Un module appelé pyplot facilite la tâche des programmeurs en matière de traçage, car il fournit des fonctionnalités permettant de contrôler les styles de lignes, les propriétés des polices, le formatage des axes, etc. Il fournit différents types de graphiques et de tracés pour la visualisation des données, à savoir des histogrammes, des diagrammes d'erreur, des barres de données, etc, 
 - [x] (1-6)
@@ -161,7 +195,6 @@ Matplotlib est une bibliothèque Python très populaire pour la visualisation de
 - [x] `matplotlib`
 - [x] (***)
 - [x] (*)
-
 
 ## [Scikit-Learn](https://scikit-learn.org/stable/index.html)
 Scikit-learn est l'une des bibliothèques ML les plus populaires pour les algorithmes ML classiques. Elle est construite à partir de deux bibliothèques Python de base, à savoir NumPy et SciPy. Scikit-learn prend en charge la plupart des algorithmes d'apprentissage supervisé et non supervisé. Scikit-learn peut également être utilisé pour l'exploration et l'analyse de données, ce qui en fait un outil idéal pour les débutants en ML.
