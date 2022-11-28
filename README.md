@@ -102,24 +102,24 @@ Notez qu'il est recommandé de spécifier tous les paquets en même temps pour a
 
 Conda réussit à créer un environnement et installe pandas1.0.5 qui est la dernière version de pandas à supporter numpy1.15.3.
 ~~~
-$ conda create --name env_a numpy==1.15.3 pandas python=3.7
+conda create --name env_a numpy==1.15.3 pandas python=3.7
 ~~~
 
 Pipenv crée un environnement utilisant numpy1.19.1, ce qui ne correspond pas à mes spécifications. Pipenv détermine qu'il y a des conflits, est incapable de créer un Pipfile.lock.
 ~~~
-$ pipenv install numpy==1.15.3 pandas --python 3.7
+pipenv install numpy==1.15.3 pandas --python 3.7
 ~~~
 
 ### (4) Gérer différentes versions de Python.
 
 Conda traitera la distribution python comme un paquet et installera automatiquement toute version de python que vous avez directement spécifiée. De plus, lors de la création d'un nouvel environnement, Conda déterminera la meilleure version de python (si elle n'est pas spécifiée). 
 ~~~
-$ conda create —-name env_a pandas
+conda create —-name env_a pandas
 ~~~
 
 Pipenv n'installe pas nativement différentes versions de python. Il utilisera le python système (généralement stocké dans /usr/lib) ou le python de base (généralement stocké dans ~/miniconda3/bin si miniconda est installé) pour créer de nouveaux environnements.
 ~~~
-$ pipenv install pandas
+pipenv install pandas
 ~~~
 
 ### (5) Assurer une construction reproductible et évolutive
