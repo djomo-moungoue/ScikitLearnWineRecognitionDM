@@ -56,114 +56,116 @@ Si vous avez utilisé pip et virtualenv dans le passé, vous pouvez utiliser con
 |Y-t-il de la transparence lors de l'installation des paquets ? (9)|1|0|
 |Les environnement sont-t-il automatiquement créer/actualisés (10)|0|1|
 
-(1) Démarrer avec conda et pipenv
+### (1) Démarrer avec conda et pipenv
 
-    Pour installer conda sous Windows il faut :
-    1. télécharger Miniconda via [Miniconda installer for Windows](https://conda.io/miniconda.html) ou Anaconda via [Anaconda installer for Windows](https://www.anaconda.com/download/)
-    2. Double-cliquez sur le fichier .exe.
-    3. Suivez les instructions à l'écran.
-        - Si vous n'êtes pas sûr d'un paramètre, acceptez les valeurs par défaut. Vous pourrez les modifier ultérieurement.
-        - Lorsque l'installation est terminée, à partir du menu Démarrer, ouvrez l'invite Anaconda.
-    4. Testez votre installation. Dans votre fenêtre de terminal ou dans Anaconda Prompt, exécutez la commande conda list. 
-    ~~~
-    (base) User_ROOT> conda list
-    ~~~
-    Une liste des paquets installés apparaît si l'installation s'est déroulée correctement.
+Pour installer conda sous Windows il faut :
+1. télécharger Miniconda via [Miniconda installer for Windows](https://conda.io/miniconda.html) ou Anaconda via [Anaconda installer for Windows](https://www.anaconda.com/download/)
+2. Double-cliquez sur le fichier .exe.
+3. Suivez les instructions à l'écran.
+    - Si vous n'êtes pas sûr d'un paramètre, acceptez les valeurs par défaut. Vous pourrez les modifier ultérieurement.
+    - Lorsque l'installation est terminée, à partir du menu Démarrer, ouvrez l'invite Anaconda.
+4. Testez votre installation. Dans votre fenêtre de terminal ou dans Anaconda Prompt, exécutez la commande conda list. 
+~~~
+(base) User_ROOT> conda list
+~~~
+Une liste des paquets installés apparaît si l'installation s'est déroulée correctement.
 
-    Pour installer pipenv sous Windows il faut :
-    1. télécharger Python via [Python installer for Windows](https://www.python.org/downloads/)
-    2. Double-cliquez sur le fichier .exe.
-    3. Suivez les instructions à l'écran.
-        - Si vous n'êtes pas sûr d'un paramètre, acceptez les valeurs par défaut. Vous pourrez les modifier ultérieurement.
-        - Lorsque l'installation est terminée, à partir du menu Démarrer, ouvrez l'invite Anaconda.
-    4. Testez votre installation. Dans votre fenêtre de terminal, exécutez la commande python --version. 
-    ~~~
-    python --version
-    ~~~
-    ~~~
-    python install pip
-    ~~~
-    ~~~
-    pip install pipenv
-    ~~~
+Pour installer pipenv sous Windows il faut :
+1. télécharger Python via [Python installer for Windows](https://www.python.org/downloads/)
+2. Double-cliquez sur le fichier .exe.
+3. Suivez les instructions à l'écran.
+    - Si vous n'êtes pas sûr d'un paramètre, acceptez les valeurs par défaut. Vous pourrez les modifier ultérieurement.
+    - Lorsque l'installation est terminée, à partir du menu Démarrer, ouvrez l'invite Anaconda.
+4. Testez votre installation. Dans votre fenêtre de terminal, exécutez la commande python --version. 
+~~~
+python --version
+~~~
+~~~
+python install pip
+~~~
+~~~
+pip install pipenv
+~~~
 
-(2) Les paquets élémentaires pour l'analyse des données tels que python, pandas, matplotlib, scikit-lear, jupyter, sqlalchemy et networkx sont disponibles dans le format approprié.
-    ~~~
-    conda create --name env_ds scikit-learn sqlalchemy jupyter matplotlib networkx python=3.8
-    ~~~
-    ~~~
-    pipenv install pandas scikit-learn sqlalchemy jupyter matplotlib networkx --python 3.8
-    ~~~
+### (2) Les paquets élémentaires pour l'analyse des données sont disponibles dans le format approprié.
+~~~
+conda create --name env_ds scikit-learn sqlalchemy jupyter matplotlib networkx python=3.8
+~~~
+~~~
+pipenv install pandas scikit-learn sqlalchemy jupyter matplotlib networkx --python 3.8
+~~~
 
 
-(3) Résoudre correctement les dépendances directes (pandas par exemple) et indirectes (numpy par exemple). Notez qu'il est recommandé de spécifier tous les paquets en même temps pour aider Conda à résoudre les dépendances.
+### (3) Résoudre correctement les dépendances directes et indirectes
 
-    Conda réussit à créer un environnement et installe pandas1.0.5 qui est la dernière version de pandas à supporter numpy1.15.3.
-    ~~~
-    $ conda create --name env_a numpy==1.15.3 pandas python=3.7
-    ~~~
+Notez qu'il est recommandé de spécifier tous les paquets en même temps pour aider Conda à résoudre les dépendances.
 
-    Pipenv crée un environnement utilisant numpy1.19.1, ce qui ne correspond pas à mes spécifications. Pipenv détermine qu'il y a des conflits, est incapable de créer un Pipfile.lock.
-    ~~~
-    $ pipenv install numpy==1.15.3 pandas --python 3.7
-    ~~~
+Conda réussit à créer un environnement et installe pandas1.0.5 qui est la dernière version de pandas à supporter numpy1.15.3.
+~~~
+$ conda create --name env_a numpy==1.15.3 pandas python=3.7
+~~~
 
-(4) Gérer différentes versions de Python.
+Pipenv crée un environnement utilisant numpy1.19.1, ce qui ne correspond pas à mes spécifications. Pipenv détermine qu'il y a des conflits, est incapable de créer un Pipfile.lock.
+~~~
+$ pipenv install numpy==1.15.3 pandas --python 3.7
+~~~
 
-    Conda traitera la distribution python comme un paquet et installera automatiquement toute version de python que vous avez directement spécifiée. De plus, lors de la création d'un nouvel environnement, Conda déterminera la meilleure version de python (si elle n'est pas spécifiée). 
-    ~~~
-    $ conda create —-name env_a pandas
-    ~~~
+### (4) Gérer différentes versions de Python.
 
-    Pipenv n'installe pas nativement différentes versions de python. Il utilisera le python système (généralement stocké dans /usr/lib) ou le python de base (généralement stocké dans ~/miniconda3/bin si miniconda est installé) pour créer de nouveaux environnements.
-    ~~~
-    $ pipenv install pandas
-    ~~~
+Conda traitera la distribution python comme un paquet et installera automatiquement toute version de python que vous avez directement spécifiée. De plus, lors de la création d'un nouvel environnement, Conda déterminera la meilleure version de python (si elle n'est pas spécifiée). 
+~~~
+$ conda create —-name env_a pandas
+~~~
 
-(5) Assurer une construction reproductible et évolutive
+Pipenv n'installe pas nativement différentes versions de python. Il utilisera le python système (généralement stocké dans /usr/lib) ou le python de base (généralement stocké dans ~/miniconda3/bin si miniconda est installé) pour créer de nouveaux environnements.
+~~~
+$ pipenv install pandas
+~~~
 
-    Conda utilise un fichier `environment.yaml` pour spécifier les dépendances directes et indirectes. Les utilisateurs doivent procéder par essais et erreurs lors de la mise à jour de leurs environnements. 
+### (5) Assurer une construction reproductible et évolutive
 
-    Pipenv utilise deux fichiers pour spécifier les dépendances : 
-    - `Pipfile` pour les dépendances directes et 
-    - `Pipfile.lock` pour les dépendances directes et indirectes. 
-    - Créer un environnement en utilisant le `Pipfile.lock` garantit que les mêmes paquets seront installés, y compris le hash du paquet. 
-    - La création d'un environnement à l'aide du `Pipfile` donne la possibilité de mettre à niveau les dépendances indirectes si nécessaire.
+Conda utilise un fichier `environment.yaml` pour spécifier les dépendances directes et indirectes. Les utilisateurs doivent procéder par essais et erreurs lors de la mise à jour de leurs environnements. 
 
-(6) Combien d'espace les environnements prennent-ils ? Le partage peut-il aider ?
+Pipenv utilise deux fichiers pour spécifier les dépendances : 
+- `Pipfile` pour les dépendances directes et 
+- `Pipfile.lock` pour les dépendances directes et indirectes. 
+- Créer un environnement en utilisant le `Pipfile.lock` garantit que les mêmes paquets seront installés, y compris le hash du paquet. 
+- La création d'un environnement à l'aide du `Pipfile` donne la possibilité de mettre à niveau les dépendances indirectes si nécessaire.
 
-    Les environnements Python utilisés par les analystes des données ont tendance à être volumineux, en particulier les environnements Conda. Par exemple, un environnement conda avec jupyter et pandas occupe 1,7 Go, tandis qu'un environnement pipenv équivalent occupe 208 Mo. Bien que cela ne concerne pas la plupart des environnements de développement, cela peut devenir plus important en production, par exemple lors de l'utilisation de conteneurs [Plus ...](https://towardsdatascience.com/how-to-shrink-numpy-scipy-pandas-and-matplotlib-for-your-data-product-4ec8d7e86ee4)
+### (6) Combien d'espace les environnements prennent-ils ? Le partage peut-il aider ?
 
-    En raison de leur taille importante, les spécialistes des données utilisent souvent un environnement conda dans plusieurs projets exploratoires, voire dans plusieurs projets de production faisant partie de la même solution [Plus ...](https://stackoverflow.com/questions/55892572/keeping-the-same-shared-virtualenvs-when-switching-from-pyenv-virtualenv-to-pip)
-    L'environnement conda peut être créé, activé et utilisé depuis n'importe quel endroit.
+Les environnements Python utilisés par les analystes des données ont tendance à être volumineux, en particulier les environnements Conda. Par exemple, un environnement conda avec jupyter et pandas occupe 1,7 Go, tandis qu'un environnement pipenv équivalent occupe 208 Mo. Bien que cela ne concerne pas la plupart des environnements de développement, cela peut devenir plus important en production, par exemple lors de l'utilisation de conteneurs [Plus ...](https://towardsdatascience.com/how-to-shrink-numpy-scipy-pandas-and-matplotlib-for-your-data-product-4ec8d7e86ee4)
 
-    Un environnement pipenv est lié à un référentiel de projet. Une fois créé, Pipenv enregistre les pipfiles à la racine du référentiel. Les paquets installés sont sauvegardés dans ~/.local/share/.virtualenvs / par défaut, où pipenv s'assure qu'un environnement est créé par repo en créant un nouveau répertoire et en ajoutant un hash du chemin au nom (i.e. my_project-a3de50). L'utilisateur doit se rendre à la racine du dépôt du projet pour activer l'environnement, mais le shell restera activé même si vous quittez le répertoire. Il est possible de partager un environnement entre plusieurs projets en stockant les Pipfiles dans un répertoire séparé. L'utilisateur doit alors se souvenir de se rendre dans le référentiel pour activer et mettre à jour l'environnement.
+En raison de leur taille importante, les spécialistes des données utilisent souvent un environnement conda dans plusieurs projets exploratoires, voire dans plusieurs projets de production faisant partie de la même solution [Plus ...](https://stackoverflow.com/questions/55892572/keeping-the-same-shared-virtualenvs-when-switching-from-pyenv-virtualenv-to-pip)
+L'environnement conda peut être créé, activé et utilisé depuis n'importe quel endroit.
 
-(7) L'installation des paquets est-elle sécurisée
+Un environnement pipenv est lié à un référentiel de projet. Une fois créé, Pipenv enregistre les pipfiles à la racine du référentiel. Les paquets installés sont sauvegardés dans ~/.local/share/.virtualenvs / par défaut, où pipenv s'assure qu'un environnement est créé par repo en créant un nouveau répertoire et en ajoutant un hash du chemin au nom (i.e. my_project-a3de50). L'utilisateur doit se rendre à la racine du dépôt du projet pour activer l'environnement, mais le shell restera activé même si vous quittez le répertoire. Il est possible de partager un environnement entre plusieurs projets en stockant les Pipfiles dans un répertoire séparé. L'utilisateur doit alors se souvenir de se rendre dans le référentiel pour activer et mettre à jour l'environnement.
 
-    Le canal principal d'[Anaconda](https://anaconda.org/anaconda/) est maintenu par des employés d'Anaconda et les paquets passent par un contrôle de sécurité strict avant d'être téléchargés. 
+### (7) L'installation des paquets est-elle sécurisée
 
-    Dans le cas de pipenv qui utilise PyPI, n'importe qui peut télécharger n'importe quel paquet et des paquets malveillants ont été découverts dans le passé [voir](https://www.zdnet.com/article/twelve-malicious-python-libraries-found-and-removed-from-pypi/). 
-    
-    Il en va de même pour [conda-forge](https://conda-forge.org/), bien qu'ils soient en train de développer un processus pour valider les artefacts avant qu'ils ne soient téléchargés vers le dépôt.
+Le canal principal d'[Anaconda](https://anaconda.org/anaconda/) est maintenu par des employés d'Anaconda et les paquets passent par un contrôle de sécurité strict avant d'être téléchargés. 
 
-    Les solutions de contournement sont les suivantes :
-    - Effectuer des contrôles de sécurité en utilisant des outils comme [x-ray](https://jfrog.com/xray/)
-    - N'installer que des paquets datant d'au moins un mois afin de laisser suffisamment de temps pour trouver et résoudre les problèmes.
+Dans le cas de pipenv qui utilise PyPI, n'importe qui peut télécharger n'importe quel paquet et des paquets malveillants ont été découverts dans le passé [voir](https://www.zdnet.com/article/twelve-malicious-python-libraries-found-and-removed-from-pypi/). 
 
-(8) Conda/pipenv est-il là pour rester ? Quelle est sa maturité ? Qui le supporte ?
+Il en va de même pour [conda-forge](https://conda-forge.org/), bien qu'ils soient en train de développer un processus pour valider les artefacts avant qu'ils ne soient téléchargés vers le dépôt.
 
-    Conda/Anaconda a été créé en 2012 par la même équipe que scipy.org, qui gère la pile scipy. Conda est un outil open source, mais le référentiel anaconda est hébergé par Anaconda Inc, une organisation à but lucratif. Si conda/anaconda ne risque pas de disparaître de sitôt, cette situation a suscité des inquiétudes quant à la possibilité qu'Anaconda Inc. commence à faire payer les utilisateurs. Ils ont récemment modifié leurs conditions générales pour faire payer les utilisateurs lourds ou commerciaux, ce qui inclut la mise en miroir du référentiel anaconda. Notez que les nouvelles conditions ne s'appliquent pas au canal conda-forge.
-    
-    Pipenv a été présenté pour la première fois en 2017 par le créateur de la populaire bibliothèque requests. Pipenv n'a pas publié de nouveau code entre novembre 2018 et mai 2020, ce qui a suscité des inquiétudes quant à son avenir [Plus ...](https://medium.com/telnyx-engineering/rip-pipenv-tried-too-hard-do-what-you-need-with-pip-tools-d500edc161d4). Pipenv a maintenant été repris par de nouveaux développeurs et est mis à jour plus régulièrement avec des versions mensuelles depuis mai 2020.
+Les solutions de contournement sont les suivantes :
+- Effectuer des contrôles de sécurité en utilisant des outils comme [x-ray](https://jfrog.com/xray/)
+- N'installer que des paquets datant d'au moins un mois afin de laisser suffisamment de temps pour trouver et résoudre les problèmes.
 
-(9) Y-t-il de la transparence lors de l'installation des paquets ?
+### (8) Conda/pipenv est-il là pour rester ? Quelle est sa maturité ? Qui le supporte ?
+
+Conda/Anaconda a été créé en 2012 par la même équipe que scipy.org, qui gère la pile scipy. Conda est un outil open source, mais le référentiel anaconda est hébergé par Anaconda Inc, une organisation à but lucratif. Si conda/anaconda ne risque pas de disparaître de sitôt, cette situation a suscité des inquiétudes quant à la possibilité qu'Anaconda Inc. commence à faire payer les utilisateurs. Ils ont récemment modifié leurs conditions générales pour faire payer les utilisateurs lourds ou commerciaux, ce qui inclut la mise en miroir du référentiel anaconda. Notez que les nouvelles conditions ne s'appliquent pas au canal conda-forge.
+
+Pipenv a été présenté pour la première fois en 2017 par le créateur de la populaire bibliothèque requests. Pipenv n'a pas publié de nouveau code entre novembre 2018 et mai 2020, ce qui a suscité des inquiétudes quant à son avenir [Plus ...](https://medium.com/telnyx-engineering/rip-pipenv-tried-too-hard-do-what-you-need-with-pip-tools-d500edc161d4). Pipenv a maintenant été repris par de nouveaux développeurs et est mis à jour plus régulièrement avec des versions mensuelles depuis mai 2020.
+
+### (9) Y-t-il de la transparence lors de l'installation des paquets ?
 
 Conda résout et imprime les paquets qui seront installés avant de les installer, donnant aux utilisateurs la possibilité de poursuivre ou de reconsidérer avant de passer par la longue procédure d'installation.
 
 Changer le nom/chemin du répertoire du projet rompt l'environnement pipenv et un nouvel environnement est automatiquement créé [voir](https://github.com/pypa/pipenv/issues/796)
 
-(10) L'environnement est-t-il créé / mis à jour automatiquement ?
+### (10) L'environnement est-t-il créé / mis à jour automatiquement ?
 
 Conda ne crée pas/met à jour automatiquement le fichier environment.yaml, contrairement à pipenv qui met à jour le Pipfile. Il est donc possible que votre environnement et votre fichier environment.yaml soient désynchronisés si vous oubliez de mettre à jour votre fichier environment.yaml.
 
