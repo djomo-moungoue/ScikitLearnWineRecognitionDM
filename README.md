@@ -37,7 +37,101 @@ Choisissez `Anaconda` si vous :
 - Vous ne souhaitez pas installer individuellement chacun des paquets que vous voulez utiliser.
 - Vous souhaitez utiliser un ensemble de paquets sélectionnés et vérifiés pour leur interopérabilité et leur facilité d'utilisation.
 
-### [Commandes `Conda` vs `pip` vs `virtualenv`](https://docs.conda.io/projects/conda/en/latest/commands.html#conda-vs-pip-vs-virtualenv-commands) : Si vous avez utilisé pip et virtualenv dans le passé, vous pouvez utiliser conda pour effectuer toutes les mêmes opérations. Pip est un gestionnaire de paquets et virtualenv est un gestionnaire d'environnement. conda est les deux.
+### [`conda` vs `pipenv` pour les analystes de données](https://towardsdatascience.com/pipenv-vs-conda-for-data-scientists-b9a372faf9d9)
+Si vous avez utilisé pip et virtualenv dans le passé, vous pouvez utiliser conda pour effectuer toutes les mêmes opérations. 
+- Pip est un gestionnaire de paquets. 
+- virtualenv est un gestionnaire d'environnement. 
+- conda et pipenv gère les paquets et l'environnement. `Conda` or `pipenv` == `pip` + `virtualenv`
+
+|Propriétés|conda|pipenv|
+|--|--|--|
+|Processus de mise en marche (1)|1|1|
+|Disponibilité des paquets (2)|1|1|
+|Résolution des dépendances (3)|1|0|
+|Version de Python (4)|1|0|
+|Spécification des dépendances (5)|||
+|Espace disque (6)|||
+|Sécurité (7)|||
+|Longivité (8)|||
+|Personnalisation (9)|||
+|Divers (10)|||
+
+(1) Démarrer avec conda et pipenv
+
+    Pour installer conda sous Windows il faut :
+    1. télécharger Miniconda via [Miniconda installer for Windows](https://conda.io/miniconda.html) ou Anaconda via [Anaconda installer for Windows](https://www.anaconda.com/download/)
+    2. Double-cliquez sur le fichier .exe.
+    3. Suivez les instructions à l'écran.
+        - Si vous n'êtes pas sûr d'un paramètre, acceptez les valeurs par défaut. Vous pourrez les modifier ultérieurement.
+        - Lorsque l'installation est terminée, à partir du menu Démarrer, ouvrez l'invite Anaconda.
+    4. Testez votre installation. Dans votre fenêtre de terminal ou dans Anaconda Prompt, exécutez la commande conda list. 
+    ~~~
+    (base) User_ROOT> conda list
+    ~~~
+    Une liste des paquets installés apparaît si l'installation s'est déroulée correctement.
+
+    Pour installer pipenv sous Windows il faut :
+    1. télécharger Python via [Python installer for Windows](https://www.python.org/downloads/)
+    2. Double-cliquez sur le fichier .exe.
+    3. Suivez les instructions à l'écran.
+        - Si vous n'êtes pas sûr d'un paramètre, acceptez les valeurs par défaut. Vous pourrez les modifier ultérieurement.
+        - Lorsque l'installation est terminée, à partir du menu Démarrer, ouvrez l'invite Anaconda.
+    4. Testez votre installation. Dans votre fenêtre de terminal, exécutez la commande python --version. 
+    ~~~
+    python --version
+    ~~~
+    ~~~
+    python install pip
+    ~~~
+    ~~~
+    pip install pipenv
+    ~~~
+
+(2) Les paquets élémentaires pour l'analyse des données tels que python, pandas, matplotlib, scikit-lear, jupyter, sqlalchemy et networkx sont disponibles dans le format approprié.
+    ~~~
+    conda create --name env_ds scikit-learn sqlalchemy jupyter matplotlib networkx python=3.8
+    ~~~
+    ~~~
+    pipenv install pandas scikit-learn sqlalchemy jupyter matplotlib networkx --python 3.8
+    ~~~
+
+
+(3) Résoudre correctement les dépendances directes (pandas par exemple) et indirectes (numpy par exemple). Notez qu'il est recommandé de spécifier tous les paquets en même temps pour aider Conda à résoudre les dépendances.
+
+    Conda réussit à créer un environnement et installe pandas1.0.5 qui est la dernière version de pandas à supporter numpy1.15.3.
+    ~~~
+    $ conda create --name env_a numpy==1.15.3 pandas python=3.7
+    ~~~
+
+    Pipenv crée un environnement utilisant numpy1.19.1, ce qui ne correspond pas à mes spécifications. Pipenv détermine qu'il y a des conflits, est incapable de créer un Pipfile.lock.
+    ~~~
+    $ pipenv install numpy==1.15.3 pandas --python 3.7
+    ~~~
+
+(4) Gérer différentes versions de Python.
+
+    Conda traitera la distribution python comme un paquet et installera automatiquement toute version de python que vous avez directement spécifiée. De plus, lors de la création d'un nouvel environnement, Conda déterminera la meilleure version de python (si elle n'est pas spécifiée). 
+    ~~~
+    $ conda create —-name env_a pandas
+    ~~~
+
+    Pipenv n'installe pas nativement différentes versions de python. Il utilisera le python système (généralement stocké dans /usr/lib) ou le python de base (généralement stocké dans ~/miniconda3/bin si miniconda est installé) pour créer de nouveaux environnements.
+    ~~~
+    $ pipenv install pandas
+    ~~~
+
+(5) Assurer une construction reproductible et évolutive
+
+    Conda utilise un fichier `environment.yaml` pour spécifier les dépendances directes et indirectes. Les utilisateurs doivent procéder par essais et erreurs lors de la mise à jour de leurs environnements. 
+
+    Pipenv utilise deux fichiers pour spécifier les dépendances : 
+    - `Pipfile` pour les dépendances directes et 
+    - `Pipfile.lock` pour les dépendances directes et indirectes. 
+    - Créer un environnement en utilisant le `Pipfile.lock` garantit que les mêmes paquets seront installés, y compris le hash du paquet. 
+    - La création d'un environnement à l'aide du `Pipfile` donne la possibilité de mettre à niveau les dépendances indirectes si nécessaire.
+
+(6) Combien d'espace les environnements prennent-ils ? Le partage peut-il aider ?
+
 
 ### Librairies installées dans l'environnement (base)
 - [x] `ca-certificates`(1)
@@ -91,6 +185,14 @@ Scikit-learn est l'une des bibliothèques ML les plus populaires pour les algori
 - [x] `notebook`
 - [x] (**)
 
+## [SQLAlchemy](https://www.sqlalchemy.org)
+SQLAlchemy est la boîte à outils SQL et le mappeur relationnel objet de Python qui offre aux développeurs d'applications toute la puissance et la souplesse de SQL. 
+
+SQLAlchemy considère la base de données comme un moteur d'algèbre relationnelle, et pas seulement comme une collection de tables. Les lignes peuvent être sélectionnées non seulement à partir de tables, mais aussi à partir de jointures et d'autres instructions de sélection ; n'importe laquelle de ces unités peut être composée dans une structure plus large. Le langage d'expression de SQLAlchemy s'appuie sur ce concept depuis son origine.
+
+## [networkx](https://networkx.org)
+NetworkX est un package Python pour la création, la manipulation et l'étude de la structure, de la dynamique et des fonctions des réseaux complexes.
+
 # Configurer l'environment de developpement
 
 Téléchargez [miniconda3 Windows 64-bit](https://docs.conda.io/en/latest/miniconda.html#windows-installers) pour votre système d'exploitation, exécutez le programme d'installation et suivez les étapes. 
@@ -105,6 +207,12 @@ Afficher les informations concernant Miniconda3
 Créer un environnement de travail
 ~~~
 (base) USER_ROOT> conda create --name wine_dataset
+~~~
+
+Afficher la list des environnements disponibles
+- usage: conda-env-script.py [-h] {create,export,list,remove,update,config}
+~~~
+(base) USER_ROOT> conda env list
 ~~~
 
 Activer l'environnement de travail
