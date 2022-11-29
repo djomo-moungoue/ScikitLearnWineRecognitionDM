@@ -1,6 +1,6 @@
 Objectif : Analyser le [jeu de données Scikit-learn sur le vin](https://scikitlearn.org/stable/modules/generated/sklearn.datasets.load_wine.html) et utiliser les propriétés pour prédire la variété du vin.
 
-|Table of Contents|
+|Table des matières|
 |---|
 |[Configurer l'environment de développement](#Configurer-l'environment-de-développement)|
 |[&nbsp;&nbsp;&nbsp;&nbsp;Miniconda](#Miniconda)|
