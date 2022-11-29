@@ -105,3 +105,15 @@ Calculez au moins une mesure de l'exactitude de la prédiction.
 Illustrez graphiquement le nombre de vins de chaque classe qui ont été correctement prédits. 
 
 ---
+
+[Resourse utile](https://www.projectpro.io/recipes/classify-wine-using-sklearn-tree-model)
+
+---
+
+# Dépannage des erreurs
+
+## data: Any - Instance of 'tuple' has no 'data' member Pylint(E101:no-member)
+~~~
+X = wine.data
+~~~
+Ce message superflu : Ignorer le, parce qu'il est dû au fait que [pylint ne reconnait pas les attributs créés dynamiquement](http://pylint-messages.wikidot.com/messages:e1101)
