@@ -13,13 +13,13 @@ print("| Objectif du projet : Prédire les variétés de vins du jeu de données
 print("-------------------------------------------------------------------------------------------\n")
 
 
-# Charger/importer les données (1)
+# 1- Charger/importer les données
 
 # Utilisez les jeux de données pour charger le jeu de données intégré sur le vin.
 wine = datasets.load_wine(return_X_y=False, as_frame=False)
 # print(wine)
 
-# Divisez les données en ensembles de formation et de test (2)
+# 2- Divisez les données en ensembles de formation et de test
 # Veillez à ce que les données soient divisées de manière aléatoire et que les classes soient équilibrées. 70% des données doivent être utilisées pour la formation.
 
 # Créez les objets X et y pour stocker respectivement les données et la valeur cible.
@@ -35,17 +35,16 @@ print(f"\n--- X_test len = {len(X_test)}  Size = {math.ceil(len(X_test)/len(X)*1
 print(f"\n--- y_train  len = {len(y_train)}  Size = {math.ceil(len(y_train)/len(y)*100)}%  ---\n {y_train}")
 print(f"\n--- y_test  len = {len(y_test)}  Size = {math.ceil(len(y_test)/len(y)*100)}%  ---\n {y_test}")
 
-# Entraîner (le modèle) un algorithme approprié (3)
+# 3- Entraîner (le modèle) un algorithme approprié
 # Sélectionnez un algorithme approprié pour prédire les variétés de vin. Entraînez l'algorithme.
 # Utilisez le classificateur à arbre de décision comme modèle d'apprentissage automatique pour ajuster les données.
 model = tree.DecisionTreeClassifier()
 model.fit(X_train, y_train)
 
-
-# Tester l'algorithme sur les données de test. (4)
+# 4- Tester l'algorithme sur les données de test.
 # Calculez au moins une mesure de l'exactitude de la prédiction.
 
 # Faites des prédictions
 
-# Illustrez votre résultat (5)
+# 5- Illustrez votre résultat
 # Illustrez graphiquement le nombre de vins de chaque classe qui ont été correctement prédits. 
