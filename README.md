@@ -5,14 +5,11 @@ Objectif : Analyser le [jeu de données Scikit-learn sur le vin](https://scikitl
 |[Configurer l'environment de développement](#Configurer-l'environment-de-développement)|
 |[&nbsp;&nbsp;&nbsp;&nbsp;Miniconda](#Miniconda)|
 |[&nbsp;&nbsp;&nbsp;&nbsp;Visual Studio Code](#Visual-Studio-Code)|
-|[Charger/importer les données (1)](#Charger/importer-les-données-(1))|
-|[Clean the data](#Clean-the-data)|
-|[Divisez les données en ensembles de formation et de test (2)](#Divisez-les-données-en-ensembles-de-formation-et-de-test-(2))|
-|[Créer un modèle](#Créer-un-modèle)|
-|[Entraîner (le modèle) un algorithme approprié (3)](#Entraîner-(le-modèle)-un-algorithme-approprié-(3))|
-|[Tester l'algorithme sur les données de test (4)](#Tester-l'algorithme-sur-les-données-de-test-(4))|
-|[Faites des prédictions](#Faites-des-prédictions)|
-|[Illustrez votre résultat (5)](#Illustrez-votre-résultat-(5))|
+|[1- Charger/importer les données](#1--Charger/importer-les-données)|
+|[2- Divisez les données en ensembles de formation et de test](#2--Divisez-les-données-en-ensembles-de-formation-et-de-test)|
+|[3- Entraîner (le modèle) un algorithme approprié](#3--Entraîner-(le-modèle)-un-algorithme-approprié)|
+|[4- Tester l'algorithme sur les données de test](#4--Tester-l'algorithme-sur-les-données-de-test)|
+|[5- Illustrez votre résultat (5)](#5--Illustrez-votre-résultat)|
 
 # Configurer l'environment de développement
 
@@ -86,20 +83,14 @@ code sklearn_anlyse_wine_dataset.py
 # Charger/importer les données (1)
 Chargez les données en mémoire, puis traitez-les. (sklearn.datasets.load_wine())
 
-# Clean the data
-
 # Divisez les données en ensembles de formation et de test (2)
 Veillez à ce que les données soient divisées de manière aléatoire et que les classes soient équilibrées. 70% des données doivent être utilisées pour la formation.
-
-# Créer un modèle
 
 # Entraîner (le modèle) un algorithme approprié (3)
 Sélectionnez un algorithme approprié pour prédire les variétés de vin. Entraînez l'algorithme.
 
 # Tester l'algorithme sur les données de test. (4)
 Calculez au moins une mesure de l'exactitude de la prédiction.
-
-# Faites des prédictions
 
 # Illustrez votre résultat (5)
 Illustrez graphiquement le nombre de vins de chaque classe qui ont été correctement prédits. 
