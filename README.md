@@ -9,7 +9,7 @@ Objectif : Analyser le [jeu de données Scikit-learn sur le vin](https://scikitl
 |[2- Divisez les données en ensembles de formation et de test](#2--Divisez-les-données-en-ensembles-de-formation-et-de-test)|
 |[3- Entraîner (le modèle) un algorithme approprié](#3--Entraîner-(le-modèle)-un-algorithme-approprié)|
 |[4- Tester l'algorithme sur les données de test](#4--Tester-l'algorithme-sur-les-données-de-test)|
-|[5- Illustrez votre résultat (5)](#5--Illustrez-votre-résultat)|
+|[5- Illustrez votre résultat](#5--Illustrez-votre-résultat)|
 
 # Configurer l'environment de développement
 
@@ -80,19 +80,19 @@ code sklearn_anlyse_wine_dataset.py
 
 ---
 
-# Charger/importer les données (1)
+# 1- Charger/importer les données
 Chargez les données en mémoire, puis traitez-les. (sklearn.datasets.load_wine())
 
-# Divisez les données en ensembles de formation et de test (2)
+# 2- Divisez les données en ensembles de formation et de test
 Veillez à ce que les données soient divisées de manière aléatoire et que les classes soient équilibrées. 70% des données doivent être utilisées pour la formation.
 
-# Entraîner (le modèle) un algorithme approprié (3)
+# 3- Entraîner (le modèle) un algorithme approprié
 Sélectionnez un algorithme approprié pour prédire les variétés de vin. Entraînez l'algorithme.
 
-# Tester l'algorithme sur les données de test. (4)
+# 4- Tester l'algorithme sur les données de test
 Calculez au moins une mesure de l'exactitude de la prédiction.
 
-# Illustrez votre résultat (5)
+# 5- Illustrez votre résultat
 Illustrez graphiquement le nombre de vins de chaque classe qui ont été correctement prédits. 
 
 ---
@@ -101,9 +101,9 @@ Illustrez graphiquement le nombre de vins de chaque classe qui ont été correct
 
 ---
 
-# Dépannage des erreurs
+### Dépannage des erreurs
 
-## data: Any - Instance of 'tuple' has no 'data' member Pylint(E101:no-member)
+#### data: Any - Instance of 'tuple' has no 'data' member Pylint(E101:no-member)
 ~~~
 X = wine.data
 ~~~
