@@ -75,6 +75,8 @@ Copier et coller dans le Terminal (3)
 ~~~
 mkdir WineDataset
 cd WineDataset
+~~~
+~~~
 touch sklearn_anlyse_wine_dataset.py
 code sklearn_anlyse_wine_dataset.py
 ~~~
