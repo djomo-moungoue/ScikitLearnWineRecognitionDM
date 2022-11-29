@@ -1,12 +1,12 @@
 """
 Projet : Analyser le jeu de données Scikit-learn sur le vin (https://scikitlearn.org/stable/modules/generated/sklearn.datasets.load_wine.html) et utiliser les propriétés pour prédire la variété du vin.
 """
-
-from sklearn import datasets
-from sklearn import metrics
-from sklearn.model_selection import train_test_split
-from sklearn import tree
 import math
+from sklearn import datasets
+from sklearn.svm import SVC
+from sklearn.model_selection import train_test_split
+from sklearn import metrics
+from sklearn import tree
 
 print("\n-------------------------------------------------------------------------------------------")
 print("| Objectif du projet : Prédire les variétés de vins du jeu de données de vin scikit-learn |")
@@ -44,7 +44,11 @@ print(f"\n--- wine_classes_distribution ---\n {wine_classes_distribution}") # cl
 
 # Diviser les tableaux ou matrices en sous-ensembles aléatoires de formation et de test.
 # shuffle=True : Assure la répartition des données de manière aléatoire
-# : Assure l'équilibre entre les classes
+#SVC(class_weight='balanced', probability=True) : Assure l'équilibre entre les classes (https://www.analyticsvidhya.com/blog/2020/07/10-techniques-to-deal-with-class-imbalance-in-machine-learning/)
+
+svc_balanced_model = SVC(class_weight='balanced', probability=True)
+print(f"\n--- svc_balanced_model ---\n {svc_balanced_model}")
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.70, shuffle=True)
 print(f"\n--- X_train len = {len(X_train)} Size = {math.ceil(len(X_train)/len(X)*100)}%  ---")
 print(f"\n--- X_test len = {len(X_test)}  Size = {math.ceil(len(X_test)/len(X)*100)}%   ---")
@@ -54,8 +58,13 @@ print(f"\n--- y_test  len = {len(y_test)}  Size = {math.ceil(len(y_test)/len(y)*
 # 3- Entraîner (le modèle) un algorithme approprié
 # Sélectionnez un algorithme approprié pour prédire les variétés de vin. Entraînez l'algorithme.
 # Utilisez le classificateur à arbre de décision comme modèle d'apprentissage automatique pour ajuster les données.
-model = tree.DecisionTreeClassifier()
-model.fit(X_train, y_train)
+# model = tree.DecisionTreeClassifier()
+svc_balanced_model.fit(X_train, y_train)
+
+svc_balanced_predict = svc_balanced_model.predict(X_test)# check performance
+print('ROCAUC score:', metrics.roc_auc_score(y_test, svc_balanced_predict))
+print('Accuracy score:', metrics.accuracy_score(y_test, svc_balanced_predict))
+print('F1 score:', metrics.f1_score(y_test, svc_balanced_predict))
 
 # 4- Tester l'algorithme sur les données de test.
 # Calculez au moins une mesure de l'exactitude de la prédiction.
