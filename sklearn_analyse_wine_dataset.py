@@ -8,9 +8,6 @@ from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
 from sklearn import tree
-from dabl import plot
-from dabl.utils import data_df_from_bunch
-
 
 print("\n-------------------------------------------------------------------------------------------")
 print("| Objectif du projet : Prédire les variétés de vins du jeu de données de vin scikit-learn |")
@@ -79,6 +76,13 @@ print(f"{metrics.classification_report(y_test, y_val)}")
 
 # 5- Illustrez votre résultat
 # Illustrez graphiquement le nombre de vins de chaque classe qui ont été correctement prédits. 
-wine_df = data_df_from_bunch(wine)
-plt.plot(wine_df, 'target')
+plt.bar(y_test, y_val)
+
+plt.title("Nombre de vins de chaque classe qui ont été correctement prédits")
+
+plt.ylabel('Y-Axis')
+plt.xlabel('X-Axis')
+
+plt.legend(["Wine Dataset Classes"])
+
 plt.show()
