@@ -1,0 +1,110 @@
+
+-----------------------2022-12-01 15:03:35.378228------------------------------------
+
+
+-------------------------------------------------------------------------------------------
+| Objectif du projet : Prédire les variétés de vins du jeu de données de vin scikit-learn |
+-------------------------------------------------------------------------------------------
+
+1- Charger/importer les données - DONE
+---- sklearn wine_bunch_df dataset keys ['data', 'target', 'frame', 'target_names', 'DESCR', 'feature_names'] : START ---
+Répartition des classes de vin sur un total de 178 instances, soit 100%
+class_0 : 59, soit 33%
+class_1 : 71, soit 40%
+class_2 : 48, soit 27%
+
+--- Wine Dataset frame ---
+     alcohol  malic_acid   ash  alcalinity_of_ash  magnesium  total_phenols  flavanoids  nonflavanoid_phenols  proanthocyanins  color_intensity   hue  od280/od315_of_diluted_wines  proline  target
+0      14.23        1.71  2.43               15.6      127.0           2.80        3.06                  0.28             2.29             5.64  1.04                          3.92   1065.0       0
+1      13.20        1.78  2.14               11.2      100.0           2.65        2.76                  0.26             1.28             4.38  1.05                          3.40   1050.0       0
+2      13.16        2.36  2.67               18.6      101.0           2.80        3.24                  0.30             2.81             5.68  1.03                          3.17   1185.0       0
+3      14.37        1.95  2.50               16.8      113.0           3.85        3.49                  0.24             2.18             7.80  0.86                          3.45   1480.0       0
+4      13.24        2.59  2.87               21.0      118.0           2.80        2.69                  0.39             1.82             4.32  1.04                          2.93    735.0       0
+..       ...         ...   ...                ...        ...            ...         ...                   ...              ...              ...   ...                           ...      ...     ...
+173    13.71        5.65  2.45               20.5       95.0           1.68        0.61                  0.52             1.06             7.70  0.64                          1.74    740.0       2
+174    13.40        3.91  2.48               23.0      102.0           1.80        0.75                  0.43             1.41             7.30  0.70                          1.56    750.0       2
+175    13.27        4.28  2.26               20.0      120.0           1.59        0.69                  0.43             1.35            10.20  0.59                          1.56    835.0       2
+176    13.17        2.59  2.37               20.0      120.0           1.65        0.68                  0.53             1.46             9.30  0.60                          1.62    840.0       2
+177    14.13        4.10  2.74               24.5       96.0           2.05        0.76                  0.56             1.35             9.20  0.61                          1.60    560.0       2
+
+[178 rows x 14 columns]
+---- sklearn wine_bunch_df dataset keys ['data', 'target', 'frame', 'target_names', 'DESCR', 'feature_names'] : END---
+
+2- Divisez les données en ensembles de formation et de test - DONE 
+Sous-ensembles de formation
+X_train : 124, soit 70%
+y_train : 124, soit 70%
+Sous-ensemble de test
+X_test : 54, soit 30%
+y_test : 54, soit 30%
+
+3- Entraîner (le modèle) un algorithme approprié : tree.DecisionTreeClassifier() - ONGOING
+
+4- Tester l'algorithme sur les données de test - ONGOING
+              precision    recall  f1-score   support
+
+           0       1.00      0.89      0.94        19
+           1       0.88      1.00      0.93        21
+           2       1.00      0.93      0.96        14
+
+    accuracy                           0.94        54
+   macro avg       0.96      0.94      0.95        54
+weighted avg       0.95      0.94      0.94        54
+
+
+5- Illustrez votre résultat - ONGOING
+
+-----------------------2022-12-01 15:04:08.873079------------------------------------
+
+
+-------------------------------------------------------------------------------------------
+| Objectif du projet : Prédire les variétés de vins du jeu de données de vin scikit-learn |
+-------------------------------------------------------------------------------------------
+
+1- Charger/importer les données - DONE
+---- sklearn wine_bunch_df dataset keys ['data', 'target', 'frame', 'target_names', 'DESCR', 'feature_names'] : START ---
+Répartition des classes de vin sur un total de 178 instances, soit 100%
+class_0 : 59, soit 33%
+class_1 : 71, soit 40%
+class_2 : 48, soit 27%
+
+--- Wine Dataset frame ---
+     alcohol  malic_acid   ash  alcalinity_of_ash  magnesium  total_phenols  flavanoids  nonflavanoid_phenols  proanthocyanins  color_intensity   hue  od280/od315_of_diluted_wines  proline  target
+0      14.23        1.71  2.43               15.6      127.0           2.80        3.06                  0.28             2.29             5.64  1.04                          3.92   1065.0       0
+1      13.20        1.78  2.14               11.2      100.0           2.65        2.76                  0.26             1.28             4.38  1.05                          3.40   1050.0       0
+2      13.16        2.36  2.67               18.6      101.0           2.80        3.24                  0.30             2.81             5.68  1.03                          3.17   1185.0       0
+3      14.37        1.95  2.50               16.8      113.0           3.85        3.49                  0.24             2.18             7.80  0.86                          3.45   1480.0       0
+4      13.24        2.59  2.87               21.0      118.0           2.80        2.69                  0.39             1.82             4.32  1.04                          2.93    735.0       0
+..       ...         ...   ...                ...        ...            ...         ...                   ...              ...              ...   ...                           ...      ...     ...
+173    13.71        5.65  2.45               20.5       95.0           1.68        0.61                  0.52             1.06             7.70  0.64                          1.74    740.0       2
+174    13.40        3.91  2.48               23.0      102.0           1.80        0.75                  0.43             1.41             7.30  0.70                          1.56    750.0       2
+175    13.27        4.28  2.26               20.0      120.0           1.59        0.69                  0.43             1.35            10.20  0.59                          1.56    835.0       2
+176    13.17        2.59  2.37               20.0      120.0           1.65        0.68                  0.53             1.46             9.30  0.60                          1.62    840.0       2
+177    14.13        4.10  2.74               24.5       96.0           2.05        0.76                  0.56             1.35             9.20  0.61                          1.60    560.0       2
+
+[178 rows x 14 columns]
+---- sklearn wine_bunch_df dataset keys ['data', 'target', 'frame', 'target_names', 'DESCR', 'feature_names'] : END---
+
+2- Divisez les données en ensembles de formation et de test - DONE 
+Sous-ensembles de formation
+X_train : 124, soit 70%
+y_train : 124, soit 70%
+Sous-ensemble de test
+X_test : 54, soit 30%
+y_test : 54, soit 30%
+
+3- Entraîner (le modèle) un algorithme approprié : tree.DecisionTreeClassifier() - ONGOING
+
+4- Tester l'algorithme sur les données de test - ONGOING
+              precision    recall  f1-score   support
+
+           0       1.00      0.89      0.94        19
+           1       0.88      1.00      0.93        21
+           2       1.00      0.93      0.96        14
+
+    accuracy                           0.94        54
+   macro avg       0.96      0.94      0.95        54
+weighted avg       0.95      0.94      0.94        54
+
+
+5- Illustrez votre résultat - ONGOING
