@@ -17,18 +17,21 @@ print("-------------------------------------------------------------------------
 # 1- Charger/importer les données
 
 # Utilisez les jeux de données pour charger le jeu de données intégré sur le vin.
-wine_bunch = datasets.load_wine() # -> Bunch: dict
-wine_bunch_df = datasets.load_wine(return_X_y=False, as_frame=True) # -> dict
-wine_data_target = datasets.load_wine(return_X_y=True, as_frame=False) # -> tuple
-# Error message : X = wine_bunch.data AttributeError: 'tuple' object has no attribute 'data'
-
-wine_data_target_df = datasets.load_wine(return_X_y=True, as_frame=True) # Error message : X = wine_bunch.data AttributeError: 'tuple' object has no attribute 'data'
-
+wine_bunch = datasets.load_wine() # -> dict
+wine_bunch_df = datasets.load_wine(as_frame=True) # -> dict
+wine_data_target = datasets.load_wine(return_X_y=True) # -> tuple
+wine_data_target_df = datasets.load_wine(return_X_y=True, as_frame=True) # -> tuple
 
 # print(f"\n---- sklearn wine_bunch dataset : START ---\n\n{wine_bunch}\n\n---- sklearn wine_bunch dataset : END---\n")
 # print(f"\n---- sklearn wine_bunch_df dataset : START ---\n\n{wine_bunch_df}\n\n---- sklearn wine_bunch_df dataset : END---\n")
 # print(f"\n---- sklearn wine_bunch dataset keys : START ---\n\n{str(wine_bunch.keys())}\n\n---- sklearn wine_bunch dataset keys : END---\n")
-print(f"\n---- sklearn wine_bunch_df dataset keys : START ---\n\n{str(wine_bunch_df.keys())}\n\n---- sklearn wine_bunch_df dataset keys : END---\n")
+print(f"\n---- sklearn wine_bunch_df dataset keys {list(wine_bunch.keys())} : START ---\n\n")
+for key, value in wine_bunch_df.items():
+    if key in ("data", "frame", "target", "DESCR"):
+        print(f"\n\n--- Wine Dataset {key} ---\n")
+        print(value)
+print(f"\n\n---- sklearn wine_bunch_df dataset keys {list(wine_bunch.keys())} : END---\n")
+
 # print(f"\n---- sklearn wine_data_target dataset : START ---\n\n{wine_data_target}\n\n---- sklearn wine_data_target dataset : END---\n")
 # print(f"\n---- sklearn wine_data_target_df dataset : START ---\n\n{wine_data_target_df}\n\n---- sklearn wine_data_target_df dataset : END---\n")
 
@@ -49,31 +52,13 @@ y = wine_bunch.target
 # print(f"\n--- X_dt_df ---\n {X_dt_df}")
 # print(f"\n--- y_dt_df ---\n {y_dt_df}")
 
-# Vérifier si le jeu de donnée est équilibré ou non. Il revient à vérifier si ses classes sont équilibrées ou non.
-# Afficher les différentes classes
-wine_bunch_classes = wine_bunch.target_names
-print(f"\n--- {len(wine_bunch_classes)} wine classes ---\n") #
-count = 0
-for wine_class in wine_bunch_classes:
-    count += 1
-    print(f"{count}. {wine_class}")
-
-# Déterminer la répartition des classes
+# Vérifier si le jeu de donnée est équilibré ou non en affichant la répartition des classes
 wine_bunch_description = wine_bunch.DESCR
 index_from = wine_bunch_description.index(":Class Distribution:")+len(":Class Distribution:")
 index_to = wine_bunch_description.index(":Creator: R.A. Fisher")
 wine_bunch_classes_distribution = wine_bunch_description[index_from+1:index_to]
 # print(f"\n--- wine_description ---\n {wine_description}")
 print(f"\n--- wine_bunch_classes_distribution ---\n {wine_bunch_classes_distribution}") # class_0 (59), class_1 (71), class_2 (48) -> Les classes ne sont pas équilibrées
-
-# Afficher les différents constituants
-wine_bunch_constituents = wine_bunch.feature_names
-print(f"\n--- {len(wine_bunch_constituents)} wine constituents ---\n") #
-count = 0
-for constituent in wine_bunch_constituents:
-    count += 1
-    print(f"{count}. {constituent}")
-
 
 # Diviser les tableaux ou matrices en sous-ensembles aléatoires de formation et de test.
 # shuffle=True : Assure la répartition des données de manière aléatoire
