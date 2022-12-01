@@ -4,6 +4,7 @@ Projet : Analyser le jeu de données Scikit-learn sur le vin (https://scikitlear
 import matplotlib.pyplot as plt
 import pandas as pd
 from os import environ
+from pathlib import Path
 from loggerza import LoggerZa
 from sklearn import datasets
 from sklearn.svm import SVC
@@ -13,7 +14,8 @@ from sklearn import tree
 
 # Afin d'éviter le message d'avertissement : Warning: QT_DEVICE_PIXEL_RATIO is deprecated. ...
 environ["QT_DEVICE_PIXEL_RATIO"], environ["QT_AUTO_SCREEN_SCALE_FACTOR"], environ["QT_SCREEN_SCALE_FACTORS"], environ["QT_SCALE_FACTOR"]  = "0", "1", "1", "1"
-
+CURRENT_FILE = Path(__file__).resolve()
+PROJECT_ROOT = CURRENT_FILE.parent
 LoggerZa.log("\n\n-------------------------------------------------------------------------------------------\n| Objectif du projet : Prédire les variétés de vins du jeu de données de vin scikit-learn |\n-------------------------------------------------------------------------------------------")
 
 
@@ -34,6 +36,7 @@ wine_data_target_df = datasets.load_wine(return_X_y=True, as_frame=True) # -> tu
 LoggerZa.log(f"---- sklearn wine_bunch_df dataset keys {list(wine_bunch.keys())} : START ---")
 
 wine_bunch_classes = wine_bunch_df["target_names"]
+print(f"Type of frame : {type(wine_bunch_df.get('frame'))}")
 for key, value in wine_bunch_df.items():
     if key == "target":
         series_count = pd.Series(value).value_counts()
@@ -46,7 +49,16 @@ for key, value in wine_bunch_df.items():
     if key == "frame":
         LoggerZa.log(f"--- Wine Dataset {key} ---")
         LoggerZa.log(value)
-
+        frame_dir = PROJECT_ROOT / "datasets"
+        print(f"{frame_dir} found")
+        if not Path(frame_dir).exists():
+            Path(frame_dir).mkdir()
+        dataset_csv = frame_dir / "wine_dataset_frame.csv"
+        dataset_with_index_csv = frame_dir / "wine_dataset_frame_with_index.csv"
+        dataset_json = frame_dir / "wine_dataset_frame.json"
+        value.to_csv(dataset_csv, index=False) # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_csv.html <-> read_csv() : Load a CSV file into a DataFrame.
+        value.to_csv(dataset_with_index_csv, index_label="record_id") # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_csv.html <-> read_csv() : Load a CSV file into a DataFrame.
+        value.to_json(dataset_json, orient='table') #https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_json.html <-> read_json() : Load a JSON file into a DataFrame.
 
 LoggerZa.log(f"---- sklearn wine_bunch_df dataset keys {list(wine_bunch.keys())} : END---")
 
@@ -117,6 +129,6 @@ plt.xlabel('X-Axis')
 
 plt.legend(["Wine Dataset Classes"])
 
-plt.savefig("ProjectsZa/MachineLearningZa/result/wine_dataset_barchart.jpg")
+plt.savefig(PROJECT_ROOT / "result/wine_dataset_barchart.jpg")
 
-plt.show()
+# plt.show()

@@ -12,11 +12,6 @@ class LoggerZa:
         pass
 
     @classmethod
-    def print_current_datetime(cls):
-        """"""
-        datetime.now()
-
-    @classmethod
     def log(cls, message: str, to_console=True, to_file=True, txt_format=True) -> str:
         """
         message: str\n
@@ -39,23 +34,23 @@ class LoggerZa:
             if txt_format:
                 if not Path(log_file).exists():
                     print(f"log_file : {log_file}")
-                    with open(log_file, "a") as log_file:
-                        log_file.write(f"Logging Message\n")
+                    with open(log_file, "a") as log_append:
+                        log_append.write(f"Logging Message\n")
                         if cls.counter == 1:
-                            log_writer.write(f"\n-----------------------{datetime.now()}------------------------------------\n")
+                            log_append.write(f"\n-----------------------{datetime.now()}------------------------------------\n")
                 else:
-                    with open(log_file, "a") as log_writer:
+                    with open(log_file, "a") as log_append:
                         if cls.counter == 1:
-                            log_writer.write(f"\n-----------------------{datetime.now()}------------------------------------\n")
-                        log_writer.write(f"{message}\n")
+                            log_append.write(f"\n-----------------------{datetime.now()}------------------------------------\n")
+                        log_append.write(f"{message}\n")
             else:
                 if not Path(log_file).exists():
                     print(f"{cls.counter}, {datetime.now()}, log_file : {log_file}")
-                    with open(log_file, "a") as log_file:
-                        log_file.write(f"ID, Object Name, Logging Message\n")
+                    with open(log_file, "a") as log_append:
+                        log_append.write(f"ID, Object Name, Logging Message\n")
                 else:
-                    with open(log_file, "a") as log_writer:
-                        log_writer.write(f"{cls.counter}, {datetime.now()}, {message}")
+                    with open(log_file, "a") as log_append:
+                        log_append.write(f"{cls.counter}, {datetime.now()}, {message}")
 
     @classmethod
     def validate_path(cls, file_path) -> bool:
