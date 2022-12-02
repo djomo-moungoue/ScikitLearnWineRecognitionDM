@@ -1,5 +1,7 @@
 """
-Projet : Analyser le jeu de données Scikit-learn sur le vin (https://scikitlearn.org/stable/modules/generated/sklearn.datasets.load_wine.html) et utiliser les propriétés pour prédire la variété du vin.
+Projet : Charger le jeu de données Scikit-learn sur le vin (https://scikitlearn.org/stable/modules/generated/sklearn.datasets.load_wine.html) et utiliser l'algorithme approprié pour prédire la classe d'un vin en fonction de sa composition.
+Project: Load the Scikit-learn wine dataset (https://scikitlearn.org/stable/modules/generated/sklearn.datasets.load_wine.html) and use the appropriate algorithm to predict the class of a wine based on its composition.
+Projekt: Laden Sie den Scikit-learn Weindatensatz (https://scikitlearn.org/stable/modules/generated/sklearn.datasets.load_wine.html) und verwenden Sie den entsprechenden Algorithmus, um die Klasse eines Weins auf der Grundlage seiner Zusammensetzung vorherzusagen.
 """
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -64,7 +66,7 @@ LoggerZa.log(f"\n2- Divisez les données en ensembles de formation et de test - 
 # Veillez à ce que les données soient divisées de manière aléatoire et que les classes soient équilibrées. 70% des données doivent être utilisées pour la formation.
 
 # 2.1- Créez les objets X et y pour stocker respectivement les données et la valeur cible.
-# X : Matrix contenant le dosage des 13 composants pour chaque echantillon de vin
+# X : Matrix contenant les 177 sortes de vin faite à de 13 composants dosés différement
 # y : Vecteur contenant les trois classes de vin
 X = wine_bunch.data
 y = wine_bunch.target
