@@ -5,15 +5,34 @@ Projekt: Laden Sie den Scikit-learn Weindatensatz (https://scikitlearn.org/stabl
 """
 
 import unittest
-
-from winevarietiesprediction import WineVarietiesPrediction
+from sklearn.utils import Bunch
+from MachineLearningZa.winevarietiesprediction import WineVarietiesPrediction
 
 class TestWineVarietiesPrediction(unittest.TestCase):
 
     def setUp(self):
         pass
 
+    def test_if_passes(self):
+        first = 1
+        second = 1
+        msg = "1 == 1 should be True"
+        self.assertEqual(first, second, msg)
+
+    def test_if_fail(self):
+        first = 1
+        second = 0
+        msg = "1 == 0 should be False"
+        self.assertEqual(first, second, msg)
+
 # 1- Charger/importer les données](#1--Charger/importer-les-données)
+
+    def test_if_load_dataset_returns_a_wine_bunch_object(self):
+        first = Bunch
+        second = type(WineVarietiesPrediction.load_wine_dataset())
+        msg = "second should be a Bunch object."
+        self.assertEqual(first, second, msg)
+
 
 
 # 2- Divisez les données en ensembles de formation et de test](#2--Divisez-les-données-en-ensembles-de-formation-et-de-test)
