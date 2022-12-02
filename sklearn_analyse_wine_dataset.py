@@ -21,8 +21,6 @@ LoggerZa.log("\n\n--------------------------------------------------------------
 
 LoggerZa.log(f"\n1- Charger/importer les données - DONE")
 
-
-# Utilisez les jeux de données pour charger le jeu de données intégré sur le vin.
 wine_bunch = datasets.load_wine() # -> dict
 wine_bunch_df = datasets.load_wine(as_frame=True) # -> dict
 wine_data_target = datasets.load_wine(return_X_y=True) # -> tuple
@@ -65,7 +63,9 @@ LoggerZa.log(f"---- sklearn wine_bunch_df dataset keys {list(wine_bunch.keys())}
 LoggerZa.log(f"\n2- Divisez les données en ensembles de formation et de test - DONE ")
 # Veillez à ce que les données soient divisées de manière aléatoire et que les classes soient équilibrées. 70% des données doivent être utilisées pour la formation.
 
-# Créez les objets X et y pour stocker respectivement les données et la valeur cible.
+# 2.1- Créez les objets X et y pour stocker respectivement les données et la valeur cible.
+# X : Matrix contenant le dosage des 13 composants pour chaque echantillon de vin
+# y : Vecteur contenant les trois classes de vin
 X = wine_bunch.data
 y = wine_bunch.target
 # X_dt = wine_data_target[0]
@@ -79,13 +79,14 @@ y = wine_bunch.target
 # LoggerZa.log(f"\n--- X_dt_df ---\n {X_dt_df}")
 # LoggerZa.log(f"\n--- y_dt_df ---\n {y_dt_df}")
 
-# Diviser les tableaux ou matrices en sous-ensembles aléatoires de formation et de test.
-# shuffle=True : Assure la répartition des données de manière aléatoire
+# 2.2- Diviser les tableaux ou matrices en sous-ensembles aléatoires de formation et de test.
+# shuffle=True et random_state=42 : Assure la répartition des données de manière aléatoire
 # SVC(class_weight='balanced', probability=True) : Assure l'équilibre entre les classes (https://www.analyticsvidhya.com/blog/2020/07/10-techniques-to-deal-with-class-imbalance-in-machine-learning/)
 # - class_weight : dict ou 'balanced', default=None : Fixe le paramètre C de la classe i à class_weight[i]*C pour le SVC. S'il n'est pas donné, toutes les classes sont supposées avoir un poids de un. 
 # Le mode "équilibré" utilise les valeurs de y pour ajuster automatiquement les poids de manière inversement proportionnelle aux fréquences des classes dans les données d'entrée comme n_échantillons / (n_classes * np.bincount(y)).
 # - random_state : int, RandomState instance ou None, default=None : Contrôle la génération de nombres pseudo-aléatoires pour mélanger les données afin d'estimer les probabilités. Ignoré lorsque la probabilité est False. 
 # Passez un int pour une sortie reproductible sur plusieurs appels de fonction. Voir le glossaire <random_state>.
+
 svc_balanced_model = SVC(class_weight='balanced', probability=True)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.70, random_state=42)
