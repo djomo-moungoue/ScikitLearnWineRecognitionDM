@@ -9,6 +9,7 @@ from pathlib import Path
 from datetime import datetime
 from sklearn.datasets import load_wine
 from sklearn.utils import Bunch
+from sklearn.model_selection import train_test_split
 
 class WineVarietiesPrediction:
     """
@@ -35,13 +36,25 @@ class WineVarietiesPrediction:
         return wine_bunch
 
     def get_data(self, wine_bunch: Bunch) -> np.ndarray:
-        """Returns the value of the data key of the dataset."""
-        X = wine_bunch['data']
-        return X
+        """Returns the value of the data key of the input dataset."""
+        return wine_bunch['data']
 
     def get_target(self, wine_bunch: Bunch) -> np.ndarray:
-        """Returns the value of the target key of the dataset."""
-        y = wine_bunch['target']
-        return y
+        """Returns the value of the target key of the input dataset."""
+        return wine_bunch['target']
+
+    def split_input(self, data, target, train_size=0.70, random_state=42) -> list:
+        """
+        shuffle=True : shuffle the input before splitting.
+        train_size=0.70 : use 70% of data for training purpose the 30% for test purpose.
+        random_state=42 : Controls the shuffling applied to the data before applying the split and reproduce output across multiple function calls.
+        """
+        return train_test_split(X, y, train_size, random_state)
+
+if __name__ == "__main__":
+    wine_variety_prediction = WineVarietiesPrediction()
+    wine_bunch = wine_variety_prediction.load_wine_dataset()
+    X = wine_variety_prediction.get_data(wine_bunch)
+    y = wine_variety_prediction.get_target(wine_bunch)
 
         

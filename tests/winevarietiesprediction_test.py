@@ -36,61 +36,96 @@ class TestWineVarietiesPrediction(unittest.TestCase):
 
     def test_if_load_dataset_returns_a_wine_bunch_object(self):
         """second should be a Bunch object."""
-        first = Bunch
         second = type(WineVarietiesPrediction().load_wine_dataset())
+
+        first = Bunch
         msg = "second should be a Bunch object."
         self.assertEqual(first, second, msg)
 
     def test_if_load_dataset_returns_178_instances(self):
         """second should return 178."""
-        first = 178
         wine_bunch = WineVarietiesPrediction().load_wine_dataset()
+
+        first = 178
         second = len(wine_bunch["target"])
         msg = "second should return 178."
         self.assertEqual(first, second, msg)
 
     def test_if_load_dataset_returns_a_target_of_3_classes(self):
         """second should return 3."""
-        first = 3
         wine_bunch = WineVarietiesPrediction().load_wine_dataset()
+
+        first = 3
         second = len(set(wine_bunch["target"]))
         msg = "second should return 3."
         self.assertEqual(first, second, msg)
 
-    def test_if_get_data_returns_a_np_ndarray(self):
-        """second should return a """
+    def test_if_get_data_returns_a_ndarray(self):
+        """second should return a ndarray"""
+        wine_variety_prediction = WineVarietiesPrediction()
+        wine_bunch = wine_variety_prediction.load_wine_dataset()
+        data = wine_variety_prediction.get_data(wine_bunch)
+
         first = np.ndarray
-        wine_bunch = WineVarietiesPrediction().load_wine_dataset()
-        data = WineVarietiesPrediction().get_data(wine_bunch)
         second = type(data)
-        msg = "second should return a 178x13 data matrix."
+        msg = "second should return a ndarray"
         self.assertEqual(first, second, msg)
 
-    def test_if_get_target_returns_a_np_ndarray(self):
-        """second should return a tuple"""
+    def test_if_get_target_returns_a_ndarray(self):
+        """second should return a ndarray"""
+        wine_variety_prediction = WineVarietiesPrediction()
+        wine_bunch = wine_variety_prediction.load_wine_dataset()
+        target = wine_variety_prediction.get_target(wine_bunch)
+
         first = np.ndarray
-        wine_bunch = WineVarietiesPrediction().load_wine_dataset()
-        target = WineVarietiesPrediction().get_target(wine_bunch)
         second = type(target)
-        msg = "second should return a 178 target vector."
+        msg = "second should return a ndarray."
         self.assertEqual(first, second, msg)
 
-    def test_if_get_data_returns_a_178x13_data_matrix(self):
-        """second should return a 178x13 data matrix."""
+    def test_if_get_data_returns_a_178x13_data_ndarray(self):
+        """second should return a data ndarray of 178x13 elements."""
+        wine_variety_prediction = WineVarietiesPrediction()
+        wine_bunch = wine_variety_prediction.load_wine_dataset()
+        data = wine_variety_prediction.get_data(wine_bunch)
+
         first = (178,13)
-        wine_bunch = WineVarietiesPrediction().load_wine_dataset()
-        data = WineVarietiesPrediction().get_data(wine_bunch)
         second = np.shape(data)
-        msg = "second should return a 178x13 data matrix."
+        msg = "second should return a data ndarray of 178x13 elements."
         self.assertEqual(first, second, msg)
 
-    def test_if_get_target_returns_a_178_target_vector(self):
-        """second should return a 178 target vector."""
+    def test_if_get_target_returns_a_178_target_ndarray(self):
+        """second should return a target ndarray of 178 elements."""
+        wine_variety_prediction = WineVarietiesPrediction()
+        wine_bunch = wine_variety_prediction.load_wine_dataset()
+        target = wine_variety_prediction.get_target(wine_bunch)
+
         first = 178
-        wine_bunch = WineVarietiesPrediction().load_wine_dataset()
-        target = WineVarietiesPrediction().get_target(wine_bunch)
         second = len(target)
-        msg = "second should return a 178 target vector."
+        msg = "second should return a target ndarray of 178 elements."
+        self.assertEqual(first, second, msg)
+
+    def test_if_split_data_returns_a_list(self):
+        """second should return a list."""
+        wine_variety_prediction = WineVarietiesPrediction()
+        wine_bunch = wine_variety_prediction.load_wine_dataset()
+        data = wine_variety_prediction.get_data(wine_bunch)
+        target = wine_variety_prediction.get_target(wine_bunch)
+
+        first = list
+        second = type(wine_variety_prediction.split_input())
+        msg = "second should return a list."
+        self.assertEqual(first, second, msg)
+
+    def test_if_split_data_returns_a_list_2_time_bigger(self):
+        """second should return a list containing twice the number of elements in target."""
+        wine_variety_prediction = WineVarietiesPrediction()
+        wine_bunch = wine_variety_prediction.load_wine_dataset()
+        data = wine_variety_prediction.get_data(wine_bunch)
+        target = wine_variety_prediction.get_target(wine_bunch)
+
+        first = len(target)*2
+        second = len(wine_variety_prediction.split_input())
+        msg = "second should return a list containing twice the number of elements in target."
         self.assertEqual(first, second, msg)
 
 
