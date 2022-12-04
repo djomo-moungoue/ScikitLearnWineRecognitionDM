@@ -10,6 +10,8 @@ from datetime import datetime
 from sklearn.datasets import load_wine
 from sklearn.utils import Bunch
 from sklearn.model_selection import train_test_split
+from imblearn.over_sampling import SMOTE
+
 
 class WineVarietiesPrediction:
     """
@@ -24,6 +26,7 @@ class WineVarietiesPrediction:
     def __init__(self):
         pass
 
+
     def load_wine_dataset(self, as_frame=False) -> Bunch:
         """
         Load the wine recognition dataset from sklearn and return a sklearn.utils.Bunch object
@@ -35,15 +38,18 @@ class WineVarietiesPrediction:
         print("Wine Recognition Dataset loaded...")
         return wine_bunch
 
+
     def get_data(self, wine_bunch: Bunch) -> np.ndarray:
         """Returns the value of the data key of the input dataset."""
-        print("Data got...")
+        print("Data obtained...")
         return wine_bunch['data']
+
 
     def get_target(self, wine_bunch: Bunch) -> np.ndarray:
         """Returns the value of the target key of the input dataset."""
-        print("Target got...")
+        print("Target obtained...")
         return wine_bunch['target']
+
 
     def split_input(self, data, target, shuffle_ : bool=True, train_size_ : float=0.70, random_state_ : int=42) -> list:
         """
@@ -51,7 +57,7 @@ class WineVarietiesPrediction:
         train_size : use the given percentage of data for training purpose the rest for test purpose. Default 0.70
         random_state : Controls the shuffling applied to the data before applying the split and reproduce output across multiple function calls. Default 42
         """
-        print("Input splitted into X_train, X_test, y_train and y_test...")
+        print("Input split into X_train, X_test, y_train and y_test...")
         return train_test_split(data, target, shuffle=shuffle_, train_size=train_size_, random_state=random_state_)
 
     def get_classes_distritution(self, train_test : list) -> dict:
@@ -65,8 +71,8 @@ class WineVarietiesPrediction:
             classes_distribution[f'class_{i}_test (%)'] = round(pd.Series(train_test[3]).value_counts()[i] / y_test_count*100)
         print("Distribution of classes determined...")
         return classes_distribution
-
-    def balance_classes_distribution(self, train_test : list) -> list:
+    
+    def balance_classes_distribution(self, target : list, data : list) -> tuple:
         """
         Obtain a list of X_train, X_test, y_train, y_test data and balance the distribution of classes.
         
@@ -80,15 +86,22 @@ class WineVarietiesPrediction:
         7. Try to detect anomaly or change in the dataset -> not used, we don't have the required skills.
         Reference : https://machinelearningmastery.com/tactics-to-combat-imbalanced-classes-in-your-machine-learning-dataset/
         """
+        smote = SMOTE(random_state=42)
         print("Distribution of classes balanced...")
-        return None
+        X_smote, y_smote = smote.fit_resample(data, target)  
+        return (X_smote, y_smote) 
 
 
 if __name__ == "__main__":
     wine_variety_prediction = WineVarietiesPrediction()
     wine_bunch = wine_variety_prediction.load_wine_dataset()
-    X = wine_variety_prediction.get_data(wine_bunch)
+    X = wine_variety_prediction.get_data(wine_bunch), 
     y = wine_variety_prediction.get_target(wine_bunch)
+    print(type(wine_variety_prediction.balance_classes_distribution(X, y)))
+    X_smote, y_smote = wine_variety_prediction.balance_classes_distribution(X, y)
     X_train, X_test, y_train, y_test = wine_variety_prediction.split_input(X, y)
-    print(f"Distribution of classes : {wine_variety_prediction.get_classes_distritution([X_train, X_test, y_train, y_test])}")
+    print(f"Initial distribution of classes : {wine_variety_prediction.get_classes_distritution([X_train, X_test, y_train, y_test])}")
+    X_smote_train, X_smote_test, y_smote_train, y_smote_test = wine_variety_prediction.split_input(X_smote, y_smote)
+    print(f"Balanced distribution of classes : {wine_variety_prediction.get_classes_distritution([X_smote_train, X_smote_test, y_smote_train, y_smote_test])}")
+
         

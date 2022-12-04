@@ -53,7 +53,7 @@ Afficher les librairies installées dans l'environnement actuel
 
 Installer les librairies requises dans l'environnement de travail
 ~~~
-(sklearn_wine_dataset) USER_ROOT> conda install pandas matplotlib scikit-learn jupyter
+(sklearn_wine_dataset) USER_ROOT> conda install --channel conda-forge pandas matplotlib scikit-learn imbalanced-learn --dry-run
 ~~~
 
 ## Visual Studio Code
