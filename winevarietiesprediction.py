@@ -27,28 +27,28 @@ class WineVarietiesPrediction:
         pass
 
 
-    def load_wine_dataset(self, as_frame=False) -> Bunch:
+    def load_wine_dataset(self, as_frame_=False) -> Bunch:
         """
         Load the wine recognition dataset from sklearn and return a sklearn.utils.Bunch object
         references : 
         - https://scikit-learn.org/stable/datasets/toy_dataset.html#wine-recognition-dataset  
         - https://scikit-learn.org/stable/modules/generated/sklearn.utils.Bunch.html#sklearn.utils.Bunch
         """
-        wine_bunch = load_wine()
+        wine_bunch = load_wine(as_frame=as_frame_)
         print("Wine Recognition Dataset loaded...")
         return wine_bunch
 
 
-    def get_data(self, wine_bunch: Bunch) -> np.ndarray:
+    def get_data(self, wine_bunch_: Bunch) -> np.ndarray:
         """Returns the value of the data key of the input dataset."""
         print("Data obtained...")
-        return wine_bunch['data']
+        return wine_bunch_['data']
 
 
-    def get_target(self, wine_bunch: Bunch) -> np.ndarray:
+    def get_target(self, wine_bunch_: Bunch) -> np.ndarray:
         """Returns the value of the target key of the input dataset."""
         print("Target obtained...")
-        return wine_bunch['target']
+        return wine_bunch_['target']
 
 
     def split_input(self, data, target, shuffle_ : bool=True, train_size_ : float=0.70, random_state_ : int=42) -> list:
@@ -88,20 +88,19 @@ class WineVarietiesPrediction:
         """
         smote = SMOTE(random_state=42)
         print("Distribution of classes balanced...")
-        X_smote, y_smote = smote.fit_resample(data, target)  
-        return (X_smote, y_smote) 
+        return smote.fit_resample(data, target) 
 
 
 if __name__ == "__main__":
     wine_variety_prediction = WineVarietiesPrediction()
     wine_bunch = wine_variety_prediction.load_wine_dataset()
-    X = wine_variety_prediction.get_data(wine_bunch), 
+    X = wine_variety_prediction.get_data(wine_bunch)
     y = wine_variety_prediction.get_target(wine_bunch)
-    print(type(wine_variety_prediction.balance_classes_distribution(X, y)))
+#    print(type(wine_variety_prediction.balance_classes_distribution(X, y)))
     X_smote, y_smote = wine_variety_prediction.balance_classes_distribution(X, y)
     X_train, X_test, y_train, y_test = wine_variety_prediction.split_input(X, y)
     print(f"Initial distribution of classes : {wine_variety_prediction.get_classes_distritution([X_train, X_test, y_train, y_test])}")
-    X_smote_train, X_smote_test, y_smote_train, y_smote_test = wine_variety_prediction.split_input(X_smote, y_smote)
-    print(f"Balanced distribution of classes : {wine_variety_prediction.get_classes_distritution([X_smote_train, X_smote_test, y_smote_train, y_smote_test])}")
+#    X_smote_train, X_smote_test, y_smote_train, y_smote_test = wine_variety_prediction.split_input(X_smote, y_smote)
+#    print(f"Balanced distribution of classes : {wine_variety_prediction.get_classes_distritution([X_smote_train, X_smote_test, y_smote_train, y_smote_test])}")
 
         
