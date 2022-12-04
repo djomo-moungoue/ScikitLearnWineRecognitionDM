@@ -4,7 +4,7 @@ Project: Load the Scikit-learn wine dataset (https://scikitlearn.org/stable/modu
 Projekt: Laden Sie den Scikit-learn Weindatensatz (https://scikitlearn.org/stable/modules/generated/sklearn.datasets.load_wine.html) und verwenden Sie den entsprechenden Algorithmus, um die Klasse eines Weins auf der Grundlage seiner Zusammensetzung vorherzusagen.
 """
 import numpy as np
-import array
+import pandas as pd
 from pathlib import Path
 from datetime import datetime
 from sklearn.datasets import load_wine
@@ -37,19 +37,35 @@ class WineVarietiesPrediction:
 
     def get_data(self, wine_bunch: Bunch) -> np.ndarray:
         """Returns the value of the data key of the input dataset."""
+        print("Data got...")
         return wine_bunch['data']
 
     def get_target(self, wine_bunch: Bunch) -> np.ndarray:
         """Returns the value of the target key of the input dataset."""
+        print("Target got...")
         return wine_bunch['target']
 
-    def split_input(self, data, target, shuffle : bool=True, train_size : float=0.70, random_state : int=42) -> list:
+    def split_input(self, data, target, shuffle_ : bool=True, train_size_ : float=0.70, random_state_ : int=42) -> list:
         """
         shuffle : shuffle the rows of the input before splitting. Default True
         train_size : use the given percentage of data for training purpose the rest for test purpose. Default 0.70
         random_state : Controls the shuffling applied to the data before applying the split and reproduce output across multiple function calls. Default 42
         """
-        return train_test_split(data, target, shuffle, train_size, random_state)
+        print("Input splitted into X_train, X_test, y_train and y_test...")
+        return train_test_split(data, target, shuffle=shuffle_, train_size=train_size_, random_state=random_state_)
+
+    def get_classes_distritution(self, train_test : list) -> dict:
+        """Obtain a list of X_train, X_test, y_train, y_test data and determine the distribution of classes. Helpful to check how balanced classes are."""
+        y_train_count = len(train_test[2])
+        y_test_count = len(train_test[3])
+        classes_distribution = {}
+        for i in range(len(pd.Series(y_train).value_counts())):
+            classes_distribution[f'class_{i}_train (%)'] = round(pd.Series(train_test[2]).value_counts()[i] / y_train_count*100)
+        for i in range(len(pd.Series(y_test).value_counts())):
+            classes_distribution[f'class_{i}_test (%)'] = round(pd.Series(train_test[3]).value_counts()[i] / y_test_count*100)
+        print("Distribution of classes determined...")
+        return classes_distribution
+
 
 if __name__ == "__main__":
     wine_variety_prediction = WineVarietiesPrediction()
@@ -57,4 +73,5 @@ if __name__ == "__main__":
     X = wine_variety_prediction.get_data(wine_bunch)
     y = wine_variety_prediction.get_target(wine_bunch)
     X_train, X_test, y_train, y_test = wine_variety_prediction.split_input(X, y)
+    print(f"Distribution of classes : {wine_variety_prediction.get_classes_distritution([X_train, X_test, y_train, y_test])}")
         
