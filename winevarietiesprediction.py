@@ -3,7 +3,8 @@ Projet : Charger le jeu de données Scikit-learn sur le vin (https://scikitlearn
 Project: Load the Scikit-learn wine dataset (https://scikitlearn.org/stable/modules/generated/sklearn.datasets.load_wine.html) and use the appropriate algorithm to predict the class of a wine based on its composition.
 Projekt: Laden Sie den Scikit-learn Weindatensatz (https://scikitlearn.org/stable/modules/generated/sklearn.datasets.load_wine.html) und verwenden Sie den entsprechenden Algorithmus, um die Klasse eines Weins auf der Grundlage seiner Zusammensetzung vorherzusagen.
 """
-import numpy
+import numpy as np
+import array
 from pathlib import Path
 from datetime import datetime
 from sklearn.datasets import load_wine
@@ -33,12 +34,12 @@ class WineVarietiesPrediction:
         print("Wine Recognition Dataset loaded...")
         return wine_bunch
 
-    def get_data(self, wine_bunch: Bunch) -> numpy.ndarray:
+    def get_data(self, wine_bunch: Bunch) -> np.ndarray:
         """Returns the value of the data key of the dataset."""
         X = wine_bunch['data']
         return X
 
-    def get_target(self, wine_bunch: Bunch) -> numpy.ndarray:
+    def get_target(self, wine_bunch: Bunch) -> np.ndarray:
         """Returns the value of the target key of the dataset."""
         y = wine_bunch['target']
         return y

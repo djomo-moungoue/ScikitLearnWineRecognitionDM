@@ -7,6 +7,7 @@ Projekt: Laden Sie den Scikit-learn Weindatensatz (https://scikitlearn.org/stabl
 import unittest
 import pandas as pd
 import numpy as np
+import array
 from pathlib import Path
 from datetime import datetime
 from sklearn.utils import Bunch
@@ -56,18 +57,18 @@ class TestWineVarietiesPrediction(unittest.TestCase):
         msg = "second should return 3."
         self.assertEqual(first, second, msg)
 
-    def test_if_get_data_returns_a_(self):
+    def test_if_get_data_returns_a_np_ndarray(self):
         """second should return a """
-        first = None
+        first = np.ndarray
         wine_bunch = WineVarietiesPrediction().load_wine_dataset()
         data = WineVarietiesPrediction().get_data(wine_bunch)
         second = type(data)
         msg = "second should return a 178x13 data matrix."
         self.assertEqual(first, second, msg)
 
-    def test_if_get_target_returns_a_tuple(self):
+    def test_if_get_target_returns_a_np_ndarray(self):
         """second should return a tuple"""
-        first = tuple
+        first = np.ndarray
         wine_bunch = WineVarietiesPrediction().load_wine_dataset()
         target = WineVarietiesPrediction().get_target(wine_bunch)
         second = type(target)
