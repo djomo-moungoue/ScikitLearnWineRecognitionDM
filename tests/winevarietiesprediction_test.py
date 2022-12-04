@@ -112,7 +112,7 @@ class TestWineVarietiesPrediction(unittest.TestCase):
         target = wine_variety_prediction.get_target(wine_bunch)
 
         first = list
-        second = type(wine_variety_prediction.split_input())
+        second = type(wine_variety_prediction.split_input(data, target))
         msg = "second should return a list."
         self.assertEqual(first, second, msg)
 
@@ -124,7 +124,7 @@ class TestWineVarietiesPrediction(unittest.TestCase):
         target = wine_variety_prediction.get_target(wine_bunch)
 
         first = len(target)*2
-        second = len(wine_variety_prediction.split_input())
+        second = len(wine_variety_prediction.split_input(data, target))
         msg = "second should return a list containing twice the number of elements in target."
         self.assertEqual(first, second, msg)
 

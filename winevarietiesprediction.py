@@ -43,18 +43,18 @@ class WineVarietiesPrediction:
         """Returns the value of the target key of the input dataset."""
         return wine_bunch['target']
 
-    def split_input(self, data, target, train_size=0.70, random_state=42) -> list:
+    def split_input(self, data, target, shuffle=True, train_size=0.70, random_state=42) -> list:
         """
-        shuffle=True : shuffle the input before splitting.
-        train_size=0.70 : use 70% of data for training purpose the 30% for test purpose.
-        random_state=42 : Controls the shuffling applied to the data before applying the split and reproduce output across multiple function calls.
+        shuffle : shuffle the input before splitting. Default True
+        train_size : use the given percentage of data for training purpose the rest for test purpose. Default 0.70
+        random_state : Controls the shuffling applied to the data before applying the split and reproduce output across multiple function calls. Default 42
         """
-        return train_test_split(X, y, train_size, random_state)
+        return train_test_split(data, target, shuffle, train_size, random_state)
 
 if __name__ == "__main__":
     wine_variety_prediction = WineVarietiesPrediction()
     wine_bunch = wine_variety_prediction.load_wine_dataset()
     X = wine_variety_prediction.get_data(wine_bunch)
     y = wine_variety_prediction.get_target(wine_bunch)
-
+    X_train, y_train, X_test, y_test = wine_variety_prediction.split_input(X, y)
         
