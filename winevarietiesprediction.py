@@ -66,6 +66,23 @@ class WineVarietiesPrediction:
         print("Distribution of classes determined...")
         return classes_distribution
 
+    def balance_classes_distribution(self, train_test : list) -> list:
+        """
+        Obtain a list of X_train, X_test, y_train, y_test data and balance the distribution of classes.
+        
+        Discussion about methods to balance imballanced classes:
+        1. Collect more data -> not used, because it not possible since we are not the author of the dataset.
+        2. Change the performance metric -> not used, because we don't know if it is appropriate or not.
+        3. Re-sample (under- oder over-sample) the dataset -> not used, because it could be tedious since it is manual. Manually, either delete rows from the input dataset or duplicate rows from the input dataset.
+        4.* Generate synthetic samples -> appriopriate, because we can import the module imbalanced-learn (https://github.com/scikit-learn-contrib/imbalanced-learn) from sklearn to, automatically, re-sample the classes of our dataset.
+        5.* Try different decison tree algorithms like C4.5, C5.0, CART, and Random Forest -> appropriate, because decision tree algorithms generally perform well on imbalanced datasets. (https://machinelearningmastery.com/get-your-hands-dirty-with-scikit-learn-now/)
+        6. Try penalized models -> not used, because it is complex to set the penalty matrix.
+        7. Try to detect anomaly or change in the dataset -> not used, we don't have the required skills.
+        Reference : https://machinelearningmastery.com/tactics-to-combat-imbalanced-classes-in-your-machine-learning-dataset/
+        """
+        print("Distribution of classes balanced...")
+        return None
+
 
 if __name__ == "__main__":
     wine_variety_prediction = WineVarietiesPrediction()

@@ -1,3 +1,9 @@
-experimentations/*
-logs/*
+# Byte-compiled / optimized / DLL files
+__pycache__/
 
+# Distribution / packaging
+experimentations/
+logs/
+
+# Visual Studio Code
+.vscode/
