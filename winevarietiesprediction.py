@@ -65,9 +65,9 @@ class WineVarietiesPrediction:
         y_train_count = len(train_test[2])
         y_test_count = len(train_test[3])
         classes_distribution = {}
-        for i in range(len(pd.Series(y_train).value_counts())):
+        for i in range(len(pd.Series(train_test[2]).value_counts())):
             classes_distribution[f'class_{i}_train (%)'] = round(pd.Series(train_test[2]).value_counts()[i] / y_train_count*100)
-        for i in range(len(pd.Series(y_test).value_counts())):
+        for i in range(len(pd.Series(train_test[3]).value_counts())):
             classes_distribution[f'class_{i}_test (%)'] = round(pd.Series(train_test[3]).value_counts()[i] / y_test_count*100)
         print("Distribution of classes determined...")
         return classes_distribution
@@ -89,6 +89,7 @@ class WineVarietiesPrediction:
         smote = SMOTE(random_state=42)
         print("Distribution of classes balanced...")
         return smote.fit_resample(data, target) 
+    
 
 
 if __name__ == "__main__":
@@ -97,7 +98,7 @@ if __name__ == "__main__":
     X = wine_variety_prediction.get_data(wine_bunch)
     y = wine_variety_prediction.get_target(wine_bunch)
 #    print(type(wine_variety_prediction.balance_classes_distribution(X, y)))
-    X_smote, y_smote = wine_variety_prediction.balance_classes_distribution(X, y)
+#   X_smote, y_smote = wine_variety_prediction.balance_classes_distribution(X, y)
     X_train, X_test, y_train, y_test = wine_variety_prediction.split_input(X, y)
     print(f"Initial distribution of classes : {wine_variety_prediction.get_classes_distritution([X_train, X_test, y_train, y_test])}")
 #    X_smote_train, X_smote_test, y_smote_train, y_smote_test = wine_variety_prediction.split_input(X_smote, y_smote)

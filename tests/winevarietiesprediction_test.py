@@ -32,7 +32,7 @@ class TestWineVarietiesPrediction(unittest.TestCase):
         msg = "1 == 1 should be True"
         self.assertEqual(first, second, msg)
 
-# 1- Charger/importer les données](#1--Charger/importer-les-données)
+# 1- Charger/importer les données
 
     def test_if_load_dataset_returns_a_wine_bunch_object(self):
         """second should be a Bunch object."""
@@ -59,6 +59,8 @@ class TestWineVarietiesPrediction(unittest.TestCase):
         second = len(set(wine_bunch["target"]))
         msg = "second should return 3."
         self.assertEqual(first, second, msg)
+
+# 2- Divisez les données en ensembles de formation et de test
 
     def test_if_get_data_returns_a_ndarray(self):
         """second should return a ndarray"""
@@ -124,19 +126,45 @@ class TestWineVarietiesPrediction(unittest.TestCase):
         target = wine_variety_prediction.get_target(wine_bunch)
 
         first = len(target)*2
-        second = len(wine_variety_prediction.split_input(data, target))
+        second = 0
+        for item in wine_variety_prediction.split_input(data, target):
+            second += len(item)
         msg = "second should return a list containing twice the number of elements in target."
         self.assertEqual(first, second, msg)
 
+    def test_if_get_classes_distribution_returns_a_dict(self):
+        """second should return a dict."""
+        wine_variety_prediction = WineVarietiesPrediction()
+        wine_bunch = wine_variety_prediction.load_wine_dataset()
+        data = wine_variety_prediction.get_data(wine_bunch)
+        target = wine_variety_prediction.get_target(wine_bunch)
+        content = wine_variety_prediction.split_input(data, target)
+        classes_distribution = wine_variety_prediction.get_classes_distritution(content)
+
+        first = dict
+        second = type(classes_distribution)
+        msg = "second should return a dict."
+        self.assertEqual(first, second, msg)  
+
+    def test_if_balance_classes_distribution_returns_a_list(self):
+        """second should return a list."""
+        wine_variety_prediction = WineVarietiesPrediction()
+        wine_bunch = wine_variety_prediction.load_wine_dataset()
+        data = wine_variety_prediction.get_data(wine_bunch)
+        target = wine_variety_prediction.get_target(wine_bunch)
+        content = wine_variety_prediction.split_input(data, target)
+        classes_distribution = wine_variety_prediction.get_classes_distritution(content)
+        balanced_classes = wine_variety_prediction.balance_classes_distribution(data, target)
+
+        first = list
+        second = type(balanced_classes)
+        msg = "second should return a list."
+        self.assertEqual(first, second, msg)        
+
+# 3- Entraîner (le modèle) un algorithme approprié
 
 
-# 2- Divisez les données en ensembles de formation et de test](#2--Divisez-les-données-en-ensembles-de-formation-et-de-test)
+# 4- Tester l'algorithme sur les données de test
 
 
-# 3- Entraîner (le modèle) un algorithme approprié](#3--Entraîner-(le-modèle)-un-algorithme-approprié)
-
-
-# 4- Tester l'algorithme sur les données de test](#4--Tester-l'algorithme-sur-les-données-de-test)
-
-
-# 5- Illustrez votre résultat](#5--Illustrez-votre-résultat)
+# 5- Illustrez votre résultat
