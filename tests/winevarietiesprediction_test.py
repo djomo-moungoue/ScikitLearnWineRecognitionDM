@@ -139,32 +139,61 @@ class TestWineVarietiesPrediction(unittest.TestCase):
         data = wine_variety_prediction.get_data(wine_bunch)
         target = wine_variety_prediction.get_target(wine_bunch)
         content = wine_variety_prediction.split_input(data, target)
-        classes_distribution = wine_variety_prediction.get_classes_distritution(content)
+        classes_distribution = wine_variety_prediction.get_classes_distritution(target, content)
 
         first = dict
         second = type(classes_distribution)
         msg = "second should return a dict."
         self.assertEqual(first, second, msg)  
 
-    def test_if_balance_classes_distribution_returns_a_list(self):
+    def test_if_balance_classes_distribution_returns_a_tuple(self):
         """second should return a list."""
         wine_variety_prediction = WineVarietiesPrediction()
         wine_bunch = wine_variety_prediction.load_wine_dataset()
         data = wine_variety_prediction.get_data(wine_bunch)
         target = wine_variety_prediction.get_target(wine_bunch)
         content = wine_variety_prediction.split_input(data, target)
-        classes_distribution = wine_variety_prediction.get_classes_distritution(content)
-        balanced_classes = wine_variety_prediction.balance_classes_distribution(data, target)
+        classes_distribution = wine_variety_prediction.get_classes_distritution(target, content)
+        balanced_classes = wine_variety_prediction.balance_classes_distribution([data, target])
 
-        first = list
+        first = tuple
         second = type(balanced_classes)
         msg = "second should return a list."
-        self.assertEqual(first, second, msg)        
+        self.assertEqual(first, second, msg)     
+
+    def test_if_balance_classes_distribution_returns_balanced_classes(self):
+        """second should return a list."""
+        wine_variety_prediction = WineVarietiesPrediction()
+        wine_bunch = wine_variety_prediction.load_wine_dataset()
+        data = wine_variety_prediction.get_data(wine_bunch)
+        target = wine_variety_prediction.get_target(wine_bunch)
+        content = wine_variety_prediction.split_input(data, target)
+        classes_distribution = wine_variety_prediction.get_classes_distritution(target, content)
+        balanced_classes = wine_variety_prediction.balance_classes_distribution([data, target])
+        serie_za = pd.Series([balanced_classes[1]]).value_counts()
+
+        first = max(serie_za)
+        second = True
+        for item in serie_za:
+            if first != item:
+                second = False
+        msg = f"{pd.Series([balanced_classes[1]]).value_counts()}"
+        self.assertTrue(second, msg)   
 
 # 3- Entraîner (le modèle) un algorithme approprié
-
+    def test_if_train_appropriate_algorithm(self):
+        """"""
+        pass
 
 # 4- Tester l'algorithme sur les données de test
-
+    def test_if_test_appropriate_algorithm(self):
+        """"""
+        pass
 
 # 5- Illustrez votre résultat
+    def test_if_illusrate_result(self):
+        """"""
+        pass
+
+
+

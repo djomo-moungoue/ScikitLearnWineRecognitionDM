@@ -10,7 +10,6 @@ from datetime import datetime
 from sklearn.datasets import load_wine
 from sklearn.utils import Bunch
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder
 from imblearn.over_sampling import SMOTE
 
 
@@ -61,15 +60,18 @@ class WineVarietiesPrediction:
         print("Input split into X_train, X_test, y_train and y_test...")
         return train_test_split(data, target, shuffle=shuffle_, train_size=train_size_, random_state=random_state_)
 
-    def get_classes_distritution(self, train_test : list) -> dict:
+    def get_classes_distritution(self, target : list, train_test : list) -> dict:
         """Obtain a list of X_train, X_test, y_train, y_test data and determine the distribution of classes. Helpful to check how balanced classes are."""
+        target_count = len(target)
         y_train_count = len(train_test[2])
         y_test_count = len(train_test[3])
         classes_distribution = {}
+        for i in range(len(pd.Series(target).value_counts())):
+            classes_distribution[f'class_{i} : {pd.Series(target).value_counts()[i]}/{target_count}'] = f"({round(pd.Series(target).value_counts()[i] / target_count*100)}%)"
         for i in range(len(pd.Series(train_test[2]).value_counts())):
-            classes_distribution[f'class_{i}_train {pd.Series(train_test[2]).value_counts()[i]}/{y_train_count}'] = f"({round(pd.Series(train_test[2]).value_counts()[i] / y_train_count*100)}%))"
+            classes_distribution[f'class_{i}_train : {pd.Series(train_test[2]).value_counts()[i]}/{y_train_count}'] = f"({round(pd.Series(train_test[2]).value_counts()[i] / y_train_count*100)}%)"
         for i in range(len(pd.Series(train_test[3]).value_counts())):
-            classes_distribution[f'class_{i}_train {pd.Series(train_test[3]).value_counts()[i]}/{y_test_count}'] = f"({round(pd.Series(train_test[3]).value_counts()[i] / y_test_count*100)}%))"
+            classes_distribution[f'class_{i}_test : {pd.Series(train_test[3]).value_counts()[i]}/{y_test_count}'] = f"({round(pd.Series(train_test[3]).value_counts()[i] / y_test_count*100)}%)"
         print("Distribution of classes determined...")
         return classes_distribution
     
@@ -101,6 +103,17 @@ class WineVarietiesPrediction:
         print("Distribution of classes balanced...")
         return (X_smote, y_smote)    
 
+    def train_appropriate_algorithm(self) -> None:
+        """"""
+        pass
+
+    def test_appropriate_algorithm(self) -> None:
+        """"""
+        pass
+
+    def illusrate_result(self) -> None:
+        """"""
+        pass
 
 if __name__ == "__main__":
     wine_variety_prediction = WineVarietiesPrediction()
@@ -108,9 +121,15 @@ if __name__ == "__main__":
     X = wine_variety_prediction.get_data(wine_bunch)
     y = wine_variety_prediction.get_target(wine_bunch)
     X_train, X_test, y_train, y_test = wine_variety_prediction.split_input(X, y)
-    print(f"Initial distribution of classes : {wine_variety_prediction.get_classes_distritution([X_train, X_test, y_train, y_test])}")
+    classes_distribution = wine_variety_prediction.get_classes_distritution(y, [X_train, X_test, y_train, y_test])
+    print(f"\nImbalanced distribution of classes :\n")
+    for k, v in classes_distribution.items():
+        print(f"{k} {v}")
     X_smote, y_smote = wine_variety_prediction.balance_classes_distribution([X, y])
     X_smote_train, X_smote_test, y_smote_train, y_smote_test = wine_variety_prediction.split_input(X_smote, y_smote)
-    print(f"Balanced distribution of classes : {wine_variety_prediction.get_classes_distritution([X_smote_train, X_smote_test, y_smote_train, y_smote_test])}")
+    classes_distribution = wine_variety_prediction.get_classes_distritution(y_smote, [X_smote_train, X_smote_test, y_smote_train, y_smote_test])
+    print(f"\nBalanced distribution of classes :\n")
+    for k, v in classes_distribution.items():
+        print(f"{k} {v}")
 
         
