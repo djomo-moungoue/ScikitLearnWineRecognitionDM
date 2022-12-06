@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 from datetime import datetime
+from collections import Counter
 from sklearn.datasets import load_wine
 from sklearn.utils import Bunch
 from sklearn.model_selection import train_test_split
@@ -67,11 +68,11 @@ class WineVarietiesPrediction:
         y_test_count = len(train_test[3])
         classes_distribution = {}
         for i in range(len(pd.Series(target).value_counts())):
-            classes_distribution[f'class_{i} : {pd.Series(target).value_counts()[i]}/{target_count}'] = f"({round(pd.Series(target).value_counts()[i] / target_count*100)}%)"
+            classes_distribution[f'class_{i} : {Counter(target)[i]}/{target_count}'] = f"({round(Counter(target)[i] / target_count*100)}%)"
         for i in range(len(pd.Series(train_test[2]).value_counts())):
-            classes_distribution[f'class_{i}_train : {pd.Series(train_test[2]).value_counts()[i]}/{y_train_count}'] = f"({round(pd.Series(train_test[2]).value_counts()[i] / y_train_count*100)}%)"
+            classes_distribution[f'class_{i}_train : {Counter(train_test[2])[i]}/{y_train_count}'] = f"({round(Counter(train_test[2])[i] / y_train_count*100)}%)"
         for i in range(len(pd.Series(train_test[3]).value_counts())):
-            classes_distribution[f'class_{i}_test : {pd.Series(train_test[3]).value_counts()[i]}/{y_test_count}'] = f"({round(pd.Series(train_test[3]).value_counts()[i] / y_test_count*100)}%)"
+            classes_distribution[f'class_{i}_test : {Counter(train_test[3])[i]}/{y_test_count}'] = f"({round(Counter(train_test[3])[i] / y_test_count*100)}%)"
         print("Distribution of classes determined...")
         return classes_distribution
     
@@ -101,13 +102,17 @@ class WineVarietiesPrediction:
         X_smote, y_smote = smote.fit_resample(data_target[0], data_target[1])
         # print(f"\n-----------X_smote-------\n{X_smote}\n-----------y_smote-------\n{y_smote}")
         print("Distribution of classes balanced...")
-        return (X_smote, y_smote)    
+        return (X_smote, y_smote)
 
-    def train_appropriate_algorithm(self) -> None:
+    def choose_appropriate_algorithm(self) -> None: 
+        """"""
+        pass   
+
+    def train_algorithm(self) -> None:
         """"""
         pass
 
-    def test_appropriate_algorithm(self) -> None:
+    def test_algorithm(self) -> None:
         """"""
         pass
 

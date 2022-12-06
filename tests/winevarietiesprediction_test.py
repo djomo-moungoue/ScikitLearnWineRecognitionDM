@@ -181,12 +181,12 @@ class TestWineVarietiesPrediction(unittest.TestCase):
         self.assertTrue(second, msg)   
 
 # 3- Entraîner (le modèle) un algorithme approprié
-    def test_if_train_appropriate_algorithm(self):
+    def test_if_train_algorithm(self):
         """"""
         pass
 
 # 4- Tester l'algorithme sur les données de test
-    def test_if_test_appropriate_algorithm(self):
+    def test_if_test_algorithm(self):
         """"""
         pass
 
