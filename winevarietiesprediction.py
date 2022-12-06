@@ -10,6 +10,7 @@ from datetime import datetime
 from sklearn.datasets import load_wine
 from sklearn.utils import Bunch
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
 from imblearn.over_sampling import SMOTE
 
 
@@ -66,13 +67,13 @@ class WineVarietiesPrediction:
         y_test_count = len(train_test[3])
         classes_distribution = {}
         for i in range(len(pd.Series(train_test[2]).value_counts())):
-            classes_distribution[f'class_{i}_train (%)'] = round(pd.Series(train_test[2]).value_counts()[i] / y_train_count*100)
+            classes_distribution[f'class_{i}_train {pd.Series(train_test[2]).value_counts()[i]}/{y_train_count}'] = f"({round(pd.Series(train_test[2]).value_counts()[i] / y_train_count*100)}%))"
         for i in range(len(pd.Series(train_test[3]).value_counts())):
-            classes_distribution[f'class_{i}_test (%)'] = round(pd.Series(train_test[3]).value_counts()[i] / y_test_count*100)
+            classes_distribution[f'class_{i}_train {pd.Series(train_test[3]).value_counts()[i]}/{y_test_count}'] = f"({round(pd.Series(train_test[3]).value_counts()[i] / y_test_count*100)}%))"
         print("Distribution of classes determined...")
         return classes_distribution
     
-    def balance_classes_distribution(self, target : list, data : list) -> tuple:
+    def balance_classes_distribution(self, data_target : list) -> tuple:
         """
         Obtain a list of X_train, X_test, y_train, y_test data and balance the distribution of classes.
         
@@ -80,16 +81,25 @@ class WineVarietiesPrediction:
         1. Collect more data -> not used, because it not possible since we are not the author of the dataset.
         2. Change the performance metric -> not used, because we don't know if it is appropriate or not.
         3. Re-sample (under- oder over-sample) the dataset -> not used, because it could be tedious since it is manual. Manually, either delete rows from the input dataset or duplicate rows from the input dataset.
-        4.* Generate synthetic samples -> appriopriate, because we can import the module imbalanced-learn (https://github.com/scikit-learn-contrib/imbalanced-learn) from sklearn to, automatically, re-sample the classes of our dataset.
+        4.* Generate synthetic samples -> appriopriate, because we can use the class SMOTE (Synthetic Minority Oversampling Technique)
+        from the module imblearn to automatically re-sample the classes of our dataset by over-sampling underrepresented classes.
+            used sources :
+            - [SMOTE for Imbalanced Classification with Python](https://machinelearningmastery.com/smote-oversampling-for-imbalanced-classification/)
+            - [SMOTE: Synthetic Minority Over-sampling Technique](https://arxiv.org/pdf/1106.1813.pdf)
+            - [imblearn : imbalanced-learn library]((https://github.com/scikit-learn-contrib/imbalanced-learn))
         5.* Try different decison tree algorithms like C4.5, C5.0, CART, and Random Forest -> appropriate, because decision tree algorithms generally perform well on imbalanced datasets. (https://machinelearningmastery.com/get-your-hands-dirty-with-scikit-learn-now/)
         6. Try penalized models -> not used, because it is complex to set the penalty matrix.
         7. Try to detect anomaly or change in the dataset -> not used, we don't have the required skills.
-        Reference : https://machinelearningmastery.com/tactics-to-combat-imbalanced-classes-in-your-machine-learning-dataset/
+        
+        Source : https://machinelearningmastery.com/tactics-to-combat-imbalanced-classes-in-your-machine-learning-dataset/
         """
-        smote = SMOTE(random_state=42)
+        smote = SMOTE()
+        # lab = LabelEncoder()
+        # target_transformed = lab.fit_transform(target)
+        X_smote, y_smote = smote.fit_resample(data_target[0], data_target[1])
+        # print(f"\n-----------X_smote-------\n{X_smote}\n-----------y_smote-------\n{y_smote}")
         print("Distribution of classes balanced...")
-        return smote.fit_resample(data, target) 
-    
+        return (X_smote, y_smote)    
 
 
 if __name__ == "__main__":
@@ -97,11 +107,10 @@ if __name__ == "__main__":
     wine_bunch = wine_variety_prediction.load_wine_dataset()
     X = wine_variety_prediction.get_data(wine_bunch)
     y = wine_variety_prediction.get_target(wine_bunch)
-#    print(type(wine_variety_prediction.balance_classes_distribution(X, y)))
-#   X_smote, y_smote = wine_variety_prediction.balance_classes_distribution(X, y)
     X_train, X_test, y_train, y_test = wine_variety_prediction.split_input(X, y)
     print(f"Initial distribution of classes : {wine_variety_prediction.get_classes_distritution([X_train, X_test, y_train, y_test])}")
-#    X_smote_train, X_smote_test, y_smote_train, y_smote_test = wine_variety_prediction.split_input(X_smote, y_smote)
-#    print(f"Balanced distribution of classes : {wine_variety_prediction.get_classes_distritution([X_smote_train, X_smote_test, y_smote_train, y_smote_test])}")
+    X_smote, y_smote = wine_variety_prediction.balance_classes_distribution([X, y])
+    X_smote_train, X_smote_test, y_smote_train, y_smote_test = wine_variety_prediction.split_input(X_smote, y_smote)
+    print(f"Balanced distribution of classes : {wine_variety_prediction.get_classes_distritution([X_smote_train, X_smote_test, y_smote_train, y_smote_test])}")
 
         
