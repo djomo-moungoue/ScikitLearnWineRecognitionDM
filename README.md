@@ -5,6 +5,11 @@ Project: Load the Scikit-learn wine dataset (https://scikitlearn.org/stable/modu
 
 Projekt: Laden Sie den Scikit-learn Weindatensatz (https://scikitlearn.org/stable/modules/generated/sklearn.datasets.load_wine.html) und verwenden Sie den entsprechenden Algorithmus, um die Klasse eines Weins auf der Grundlage seiner Zusammensetzung vorherzusagen.
 
+|Statut du projet|
+|ToDo|Ongoing|Done|
+|---|---|---|
+| 0 | 1 | 0 |
+
 
 |Table des matières|
 |---|
@@ -26,39 +31,53 @@ Téléchargez [miniconda3 Windows 64-bit](https://docs.conda.io/en/latest/minico
 Dans Windows Start, ouvrir `Anaconda Prompt (miniconda3)`
 
 Afficher les informations concernant Miniconda3
+
+(base) Project_ROOT>
 ~~~
-(base) USER_ROOT> conda info
+conda info
 ~~~
 
 Créer un environnement de travail
+
+(base) Project_ROOT>
 ~~~
-(base) USER_ROOT> conda create --name sklearn_wine_dataset
+conda create --name sklearn_wine_dataset
 ~~~
 
 Afficher la list des environnements disponibles
 - usage: conda-env-script.py [-h] {create,export,list,remove,update,config}
+
+(base) Project_ROOT>
 ~~~
-(base) USER_ROOT> conda env list
+conda env list
 ~~~
 
 Activer l'environnement de travail
+
+(base) Project_ROOT>
 ~~~
-(base) USER_ROOT> conda activate sklearn_wine_dataset
+conda activate sklearn_wine_dataset
 ~~~
 
 Afficher les librairies installées dans l'environnement actuel
+
+(sklearn_wine_dataset) Project_ROOT>
 ~~~
-(sklearn_wine_dataset) USER_ROOT> conda list
+conda list
 ~~~
 
 Afficher les librairies et sous-librairies qui seront insallées dans l'environnement de travail
+
+(sklearn_wine_dataset) Project_ROOT>
 ~~~
-(sklearn_wine_dataset) USER_ROOT> conda install --channel conda-forge pandas matplotlib scikit-learn imbalanced-learn --dry-run
+conda install --channel conda-forge pandas matplotlib scikit-learn imbalanced-learn --dry-run
 ~~~
 
 Installer les librairies requises dans l'environnement de travail
+
+(sklearn_wine_dataset) Project_ROOT>
 ~~~
-(sklearn_wine_dataset) USER_ROOT> conda install --channel conda-forge pandas matplotlib scikit-learn imbalanced-learn --yes
+conda install --channel conda-forge pandas matplotlib scikit-learn imbalanced-learn --yes
 ~~~
 
 ## Visual Studio Code
@@ -80,10 +99,14 @@ Ouvir le Terminal : (2)
 - A partir du ruban `Terminal`, sélectionner `New Terminal`
 
 Copier et coller dans le Terminal (3)
+
+(sklearn_wine_dataset) Project_ROOT>
 ~~~
 mkdir WineDataset
 cd WineDataset
 ~~~
+
+(sklearn_wine_dataset) Project_ROOT>
 ~~~
 touch winevarietiesprediction.py
 code winevarietiesprediction.py
