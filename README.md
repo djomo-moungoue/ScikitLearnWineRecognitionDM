@@ -4,8 +4,7 @@ Projet : Charger le jeu de données [Scikit-learn sur le vin](https://scikitlear
 Project: Load the [Scikit-learn wine dataset](https://scikitlearn.org/stable/modules/generated/sklearn.datasets.load_wine.html) and use the appropriate algorithm to predict the class of a wine based on its composition.
 
 
-|Statut du projet|
-|---|
+`Statut du projet`
 |ToDo|Ongoing|Done|
 |:---:|:---:|:---:|
 | 0 | 1 | 0 |
