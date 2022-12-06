@@ -51,9 +51,14 @@ Afficher les librairies installées dans l'environnement actuel
 (sklearn_wine_dataset) USER_ROOT> conda list
 ~~~
 
-Installer les librairies requises dans l'environnement de travail
+Afficher les librairies et sous-librairies qui seront insallées dans l'environnement de travail
 ~~~
 (sklearn_wine_dataset) USER_ROOT> conda install --channel conda-forge pandas matplotlib scikit-learn imbalanced-learn --dry-run
+~~~
+
+Installer les librairies requises dans l'environnement de travail
+~~~
+(sklearn_wine_dataset) USER_ROOT> conda install --channel conda-forge pandas matplotlib scikit-learn imbalanced-learn --yes
 ~~~
 
 ## Visual Studio Code
@@ -80,8 +85,8 @@ mkdir WineDataset
 cd WineDataset
 ~~~
 ~~~
-touch sklearn_anlyse_wine_dataset.py
-code sklearn_anlyse_wine_dataset.py
+touch winevarietiesprediction.py
+code winevarietiesprediction.py
 ~~~
 
 ---
