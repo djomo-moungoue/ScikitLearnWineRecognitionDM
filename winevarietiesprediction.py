@@ -104,20 +104,59 @@ class WineVarietiesPrediction:
         print("Distribution of classes balanced...")
         return (X_smote, y_smote)
 
-    def choose_appropriate_algorithm(self) -> None: 
-        """"""
+    def choose_an_algorithm(self) -> None: 
+        """
+        Which algorithm is best for multiclass text classification? [towardsdatascience]
+        1. Linear Support Vector Machine (SVM) is widely regarded as one of the best text classification algorithms.
+        2. Naive Bayes is another muticlass text classification algorithm.
+        3. The Logistic Regression algorithm can be easily generalized to multiple classes.
+
+        What is a good accuracy for multiclass classification? [oracle]
+        The prevailing metrics for evaluating a multiclass classification model are Accuracy :
+        - The proportion of predictions that were correct. 
+        - It is generally converted to a percentage where 100% is a perfect classifier. 
+        - For a balanced dataset, an accuracy of 100%k where k is the number of classes, is a random classifier.
+        
+        Which metric is best for multiclass classification? [oracle]
+        Most commonly used metrics for multi-classes are :
+        1. F1 score, 
+        2. Average Accuracy, 
+        3. Log-loss.
+
+        Which Optimizer is best for multiclass classification? [obviously]
+        Multiclass Classification Neural Network using Adam Optimizer.
+    	
+        Is 70% accuracy good in machine learning? [obviously]
+        Good accuracy in machine learning is subjective. But in our opinion, anything greater than 70% is a great model performance. In fact, an accuracy measure of anything between 70%-90% is not only ideal, it's realistic. This is also consistent with industry standards.
+        
+        Sources : 
+        - [oracle](https://docs.oracle.com/en-us/iaas/tools/ads-sdk/latest/user_guide/eval/Multiclass.html)
+        - [obviously](https://www.obviously.ai/post/machine-learning-model-performance)
+        - [towardsdatascience](https://towardsdatascience.com/multi-class-text-classification-model-comparison-and-selection-5eb066197568)
+        """
         pass   
 
-    def train_algorithm(self) -> None:
+    def train_the_algorithm(self) -> None:
         """"""
         pass
 
-    def test_algorithm(self) -> None:
+    def test_the_algorithm(self) -> None:
         """"""
         pass
 
-    def illusrate_result(self) -> None:
-        """"""
+    def illusrate_the_result(self) -> None:
+        """
+        The prevailing charts and plots for multiclass classification are :
+        1. the Precision-Recall Curve, 
+        2. the ROC curve, 
+        3. the Lift Chart, 
+        4. the Gain Chart, 
+        5. and the Confusion Matrix. 
+        
+        These are inter-related with preceding metrics, and are common across most multiclass classification literature.
+
+        Source : [Multiclass Classification](https://docs.oracle.com/en-us/iaas/tools/ads-sdk/latest/user_guide/eval/Multiclass.html)    
+        """
         pass
 
 if __name__ == "__main__":
