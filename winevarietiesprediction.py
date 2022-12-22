@@ -110,7 +110,7 @@ class WineVarietiesPrediction:
         print("Distribution of classes balanced...")
         return (X_smote, y_smote)
 
-    def model_the_data(self, data, target, algo='LinearRegression') -> None:
+    def model_the_data(self, X_train, X_test, y_train, y_test, algo='LinearRegression') -> dict:
         """
         algo : LinearRegression (default), GaussianNB, KNeighborsClassifier, DecisionTreeClassifier, SVC
         Which algorithm is best for multiclass text classification? [towardsdatascience]
@@ -152,33 +152,18 @@ class WineVarietiesPrediction:
                 model = SVC()
             case _:
                 model = LogisticRegression()
-        model.fit(data, target)
-        print(model)
+        model.fit(X_train, y_train)
         # make predictions
-        expected = target
-        predicted = model.predict(data)
+        expected = y_test
+        predicted = model.predict(X_test)
         # summarize the fit of the model
         print(f"\n{str(model).center(50, '+')}")
-        print(f"{'Classification Report'.center(50, '-')} \n{metrics.classification_report(expected, predicted)}")
-        print(f"{'Confusion Matrix'.center(50, '-')} \n{metrics.confusion_matrix(expected, predicted)}")
-        print(f"{'PRECISION SCORE'.center(50, '-')} \n{metrics.precision_score(expected, predicted, average=None)}") 
-        print(f"{'RECALL SCORE'.center(50, '-')} \n{metrics.recall_score(expected, predicted, average=None)}") 
-        print(f"{'F1 SCORE'.center(50, '-')} \n{metrics.f1_score(expected, predicted, average=None)}") 
-        print(f"{'ACCURACY SCORE'.center(50, '-')} \n{metrics.accuracy_score(expected, predicted)}") 
-        #print(f"{'ROC AUC SCORE'.center(50, '-')} \n{metrics.roc_auc_score(expected, predicted, average=None, multi_class='ovr')}") 
-
-
-
-
-    
-
-    def train_the_algorithm(self) -> None:
-        """"""
-        pass
-
-    def test_the_algorithm(self) -> None:
-        """"""
-        pass
+        accuracy_score_za = metrics.accuracy_score(expected, predicted)
+        precision_score_za = metrics.precision_score(expected, predicted, average=None)
+        recall_score_za = metrics.recall_score(expected, predicted, average=None)
+        f1_score_za = metrics.f1_score(expected, predicted, average=None)
+        return {'accuraty': accuracy_score_za, 'precision': precision_score_za, 'recall': recall_score_za, 'f1': f1_score_za}
+        
 
     def illusrate_the_result(self) -> None:
         """
@@ -188,6 +173,8 @@ class WineVarietiesPrediction:
         3. the Lift Chart, 
         4. the Gain Chart, 
         5. and the Confusion Matrix. 
+
+        Accuracy: The proportion of predictions that were correct. It is generally converted to a percentage where 100% is a perfect classifier. For a balanced dataset, an accuracy of  where  is the number of classes, is a random classifier. An accuracy of 0% is a perfectly wrong classifier.
         
         These are inter-related with preceding metrics, and are common across most multiclass classification literature.
 
@@ -205,19 +192,35 @@ if __name__ == "__main__":
     print(f"\nImbalanced distribution of classes :\n")
     for k, v in classes_distribution.items():
         print(f"{k} {v}")
-    wine_variety_prediction.model_the_data(X, y)
+    #scores = wine_variety_prediction.model_the_data(X_smote_train, X_smote_test, y_smote_train, y_smote_test)
     X_smote, y_smote = wine_variety_prediction.balance_classes_distribution([X, y])
     X_smote_train, X_smote_test, y_smote_train, y_smote_test = wine_variety_prediction.split_input(X_smote, y_smote)
     classes_distribution = wine_variety_prediction.get_classes_distritution(y_smote, [X_smote_train, X_smote_test, y_smote_train, y_smote_test])
     print(f"\nBalanced distribution of classes :\n")
     for k, v in classes_distribution.items():
         print(f"{k} {v}")
-    wine_variety_prediction.model_the_data(X_smote, y_smote)
-    wine_variety_prediction.model_the_data(X_smote, y_smote, 'GaussianNB')
-    wine_variety_prediction.model_the_data(X_smote, y_smote, 'KNeighborsClassifier')
-    wine_variety_prediction.model_the_data(X_smote, y_smote, 'DecisionTreeClassifier')
-    wine_variety_prediction.model_the_data(X_smote, y_smote, 'SVC')
 
+    """
+    print("\nTRAINING\n".center(50, '*'))
+    wine_variety_prediction.model_the_data(X_smote_train, y_smote_train)
+    wine_variety_prediction.model_the_data(X_smote_train, y_smote_train, 'GaussianNB')
+    #wine_variety_prediction.model_the_data(X_smote_train, y_smote_train, 'KNeighborsClassifier')
+    #wine_variety_prediction.model_the_data(X_smote_train, y_smote_train, 'DecisionTreeClassifier')
+    wine_variety_prediction.model_the_data(X_smote_train, y_smote_train, 'SVC')
+    print("\nTEST\n".center(50, '*'))
+    wine_variety_prediction.model_the_data(X_smote_test, y_smote_test)
+    wine_variety_prediction.model_the_data(X_smote_test, y_smote_test, 'GaussianNB')
+    #wine_variety_prediction.model_the_data(X_smote_test, y_smote_test, 'KNeighborsClassifier')
+    #wine_variety_prediction.model_the_data(X_smote_test, y_smote_test, 'DecisionTreeClassifier')
+    wine_variety_prediction.model_the_data(X_smote_test, y_smote_test, 'SVC')
+    """
+
+    print("\nALL\n".center(50, '*'))
+    scores = wine_variety_prediction.model_the_data(X_smote_train, X_smote_test, y_smote_train, y_smote_test)
+    scores = wine_variety_prediction.model_the_data(X_smote_train, X_smote_test, y_smote_train, y_smote_test, 'GaussianNB')
+    scores = wine_variety_prediction.model_the_data(X_smote_train, X_smote_test, y_smote_train, y_smote_test, 'SVC')
+    for k, v in scores.items():
+        print(f"{k.center(50, '-')} \n {v}")
 
 
 
