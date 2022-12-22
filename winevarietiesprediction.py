@@ -5,13 +5,19 @@ Projekt: Laden Sie den Scikit-learn Weindatensatz (https://scikitlearn.org/stabl
 """
 import numpy as np
 import pandas as pd
-from pathlib import Path
-from datetime import datetime
 from collections import Counter
-from sklearn.datasets import load_wine
-from sklearn.utils import Bunch
-from sklearn.model_selection import train_test_split
+from datetime import datetime
 from imblearn.over_sampling import SMOTE
+from pathlib import Path
+from sklearn.utils import Bunch
+from sklearn.datasets import load_wine
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
+from sklearn import metrics
+from sklearn.model_selection import train_test_split
 
 
 class WineVarietiesPrediction:
@@ -104,8 +110,9 @@ class WineVarietiesPrediction:
         print("Distribution of classes balanced...")
         return (X_smote, y_smote)
 
-    def choose_an_algorithm(self) -> None: 
+    def model_the_data(self, data, target, algo='LinearRegression') -> None:
         """
+        algo : LinearRegression (default), GaussianNB, KNeighborsClassifier, DecisionTreeClassifier, SVC
         Which algorithm is best for multiclass text classification? [towardsdatascience]
         1. Linear Support Vector Machine (SVM) is widely regarded as one of the best text classification algorithms.
         2. Naive Bayes is another muticlass text classification algorithm.
@@ -134,7 +141,36 @@ class WineVarietiesPrediction:
         - [obviously](https://www.obviously.ai/post/machine-learning-model-performance)
         - [towardsdatascience](https://towardsdatascience.com/multi-class-text-classification-model-comparison-and-selection-5eb066197568)
         """
-        pass   
+        match algo:
+            case 'GaussianNB':
+                model = GaussianNB()
+            case 'KNeighborsClassifier':
+                model = KNeighborsClassifier()
+            case 'DecisionTreeClassifier':
+                model = DecisionTreeClassifier()
+            case 'SVC':
+                model = SVC()
+            case _:
+                model = LogisticRegression()
+        model.fit(data, target)
+        print(model)
+        # make predictions
+        expected = target
+        predicted = model.predict(data)
+        # summarize the fit of the model
+        print(f"\n{str(model).center(50, '+')}")
+        print(f"{'Classification Report'.center(50, '-')} \n{metrics.classification_report(expected, predicted)}")
+        print(f"{'Confusion Matrix'.center(50, '-')} \n{metrics.confusion_matrix(expected, predicted)}")
+        print(f"{'PRECISION SCORE'.center(50, '-')} \n{metrics.precision_score(expected, predicted, average=None)}") 
+        print(f"{'RECALL SCORE'.center(50, '-')} \n{metrics.recall_score(expected, predicted, average=None)}") 
+        print(f"{'F1 SCORE'.center(50, '-')} \n{metrics.f1_score(expected, predicted, average=None)}") 
+        print(f"{'ACCURACY SCORE'.center(50, '-')} \n{metrics.accuracy_score(expected, predicted)}") 
+        #print(f"{'ROC AUC SCORE'.center(50, '-')} \n{metrics.roc_auc_score(expected, predicted, average=None, multi_class='ovr')}") 
+
+
+
+
+    
 
     def train_the_algorithm(self) -> None:
         """"""
@@ -169,11 +205,22 @@ if __name__ == "__main__":
     print(f"\nImbalanced distribution of classes :\n")
     for k, v in classes_distribution.items():
         print(f"{k} {v}")
+    wine_variety_prediction.model_the_data(X, y)
     X_smote, y_smote = wine_variety_prediction.balance_classes_distribution([X, y])
     X_smote_train, X_smote_test, y_smote_train, y_smote_test = wine_variety_prediction.split_input(X_smote, y_smote)
     classes_distribution = wine_variety_prediction.get_classes_distritution(y_smote, [X_smote_train, X_smote_test, y_smote_train, y_smote_test])
     print(f"\nBalanced distribution of classes :\n")
     for k, v in classes_distribution.items():
         print(f"{k} {v}")
+    wine_variety_prediction.model_the_data(X_smote, y_smote)
+    wine_variety_prediction.model_the_data(X_smote, y_smote, 'GaussianNB')
+    wine_variety_prediction.model_the_data(X_smote, y_smote, 'KNeighborsClassifier')
+    wine_variety_prediction.model_the_data(X_smote, y_smote, 'DecisionTreeClassifier')
+    wine_variety_prediction.model_the_data(X_smote, y_smote, 'SVC')
+
+
+
+
+
 
         
