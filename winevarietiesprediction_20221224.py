@@ -10,7 +10,6 @@ from collections import Counter
 from datetime import datetime
 from imblearn.over_sampling import SMOTE
 from matplotlib import pyplot as plt
-from os import environ
 from pathlib import Path
 from sklearn.utils import Bunch
 from sklearn.datasets import load_wine
@@ -113,7 +112,7 @@ class WineVarietiesPrediction:
         print("Distribution of classes balanced...")
         return (X_smote, y_smote)
 
-    def model_the_data(self, X_train, X_test, y_train, y_test, algo='DecisionTreeClassifier') -> dict:
+    def model_the_data(self, X_train, X_test, y_train, y_test, algo='LinearRegression') -> dict:
         """
         algo : LinearRegression (default), GaussianNB, KNeighborsClassifier, DecisionTreeClassifier, SVC
         Which algorithm is best for multiclass text classification? [towardsdatascience]
@@ -145,12 +144,16 @@ class WineVarietiesPrediction:
         - [towardsdatascience](https://towardsdatascience.com/multi-class-text-classification-model-comparison-and-selection-5eb066197568)
         """
         match algo:
-            case 'SVC':
-                model = SVC()
+            case 'GaussianNB':
+                model = GaussianNB()
             case 'KNeighborsClassifier':
                 model = KNeighborsClassifier()
-            case _:
+            case 'DecisionTreeClassifier':
                 model = DecisionTreeClassifier()
+            case 'SVC':
+                model = SVC()
+            case _:
+                model = LogisticRegression()
         model.fit(X_train, y_train)
         # make predictions
         expected = y_test
@@ -166,7 +169,7 @@ class WineVarietiesPrediction:
         return {'expected' : expected,'predicted' : predicted,'algo_name' : algo, 'accuracy': accuracy_score_za, 'precision': precision_score_za, 'recall': recall_score_za, 'f1': f1_score_za}
         
 
-    def illusrate_the_result(self, model, predicted, expected, balanced=True) -> None:
+    def illusrate_the_result(self, model, predicted, expected) -> None:
         """
         The prevailing charts and plots for multiclass classification are :
         1. the Precision-Recall Curve, 
@@ -190,101 +193,66 @@ class WineVarietiesPrediction:
         ax = fig.add_axes([0,0,1,1])
         classes = ['class 0', 'class 1', 'class 2']
         ax.bar(classes,correct_predictions)
-        if balanced:
-            file_name = model+'_balanced'
-            plt.savefig(Path('result') / file_name)
-        else:
-            file_name = model+'_imbalanced'
-            plt.savefig(Path('result') / file_name)
-
-        #plt.show()
+        plt.savefig(Path('result') / model)
+        plt.show()
         
-    def suppress_qt_warnings(self):
-        environ["QT_DEVICE_PIXEL_RATIO"] = "0"
-        environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
-        environ["QT_SCREEN_SCALE_FACTORS"] = "1"
-        environ["QT_SCALE_FACTOR"] = "1"
 
 if __name__ == "__main__":
     wine_variety_prediction = WineVarietiesPrediction()
-    wine_variety_prediction.suppress_qt_warnings()
     wine_bunch = wine_variety_prediction.load_wine_dataset()
     X = wine_variety_prediction.get_data(wine_bunch)
     y = wine_variety_prediction.get_target(wine_bunch)
     X_train, X_test, y_train, y_test = wine_variety_prediction.split_input(X, y)
     classes_distribution = wine_variety_prediction.get_classes_distritution(y, [X_train, X_test, y_train, y_test])
-    print(f"\nImbalanced distribution of classes :")
+    print(f"\nImbalanced distribution of classes :\n")
     for k, v in classes_distribution.items():
         print(f"{k} {v}")
     #scores = wine_variety_prediction.model_the_data(X_smote_train, X_smote_test, y_smote_train, y_smote_test)
     X_smote, y_smote = wine_variety_prediction.balance_classes_distribution([X, y])
     X_smote_train, X_smote_test, y_smote_train, y_smote_test = wine_variety_prediction.split_input(X_smote, y_smote)
     classes_distribution = wine_variety_prediction.get_classes_distritution(y_smote, [X_smote_train, X_smote_test, y_smote_train, y_smote_test])
-    print(f"\nBalanced distribution of classes :")
+    print(f"\nBalanced distribution of classes :\n")
     for k, v in classes_distribution.items():
         print(f"{k} {v}")
 
     algo_performances = {'DecisionTreeClassifier':0, 'GaussianNB':0,'KNeighborsClassifier':0,'LinearRegression':0,'SVC':0}
-    #counter = 1 #1000
-    #while counter > 0:
-    accuracies = {}
-    accuracies_imbalanced = {}
-    f1 = {}
-    f1_imbalanced = {}
-    scores = wine_variety_prediction.model_the_data(X_smote_train, X_smote_test, y_smote_train, y_smote_test)
-    scores_imbalanced = wine_variety_prediction.model_the_data(X_train, X_test, y_train, y_test)
-    accuracies[scores['algo_name']] = scores['accuracy']
-    accuracies_imbalanced[scores_imbalanced['algo_name']] = scores_imbalanced['accuracy']
-    f1[scores['algo_name']] = scores['f1']
-    f1_imbalanced[scores_imbalanced['algo_name']] = scores_imbalanced['f1']
-    wine_variety_prediction.illusrate_the_result(scores['algo_name'], scores['predicted'], scores['expected'])
-    wine_variety_prediction.illusrate_the_result(scores_imbalanced['algo_name'], scores_imbalanced['predicted'], scores_imbalanced['expected'], False)
-    
-    scores = wine_variety_prediction.model_the_data(X_smote_train, X_smote_test, y_smote_train, y_smote_test, 'KNeighborsClassifier')
-    scores_imbalanced = wine_variety_prediction.model_the_data(X_train, X_test, y_train, y_test, 'KNeighborsClassifier')
-    accuracies[scores['algo_name']] = scores['accuracy']
-    accuracies_imbalanced[scores_imbalanced['algo_name']] = scores_imbalanced['accuracy']
-    f1[scores['algo_name']] = scores['f1']
-    f1_imbalanced[scores_imbalanced['algo_name']] = scores_imbalanced['f1']
-    wine_variety_prediction.illusrate_the_result(scores['algo_name'], scores['predicted'], scores['expected'])
-    wine_variety_prediction.illusrate_the_result(scores_imbalanced['algo_name'], scores_imbalanced['predicted'], scores_imbalanced['expected'], False)
-    
-    scores = wine_variety_prediction.model_the_data(X_smote_train, X_smote_test, y_smote_train, y_smote_test, 'SVC')
-    scores_imbalanced = wine_variety_prediction.model_the_data(X_train, X_test, y_train, y_test, 'SVC')
-    accuracies[scores['algo_name']] = scores['accuracy']
-    accuracies_imbalanced[scores_imbalanced['algo_name']] = scores_imbalanced['accuracy']
-    f1[scores['algo_name']] = scores['f1']
-    f1_imbalanced[scores_imbalanced['algo_name']] = scores_imbalanced['f1']
-    wine_variety_prediction.illusrate_the_result(scores['algo_name'], scores['predicted'], scores['expected'])
-    wine_variety_prediction.illusrate_the_result(scores_imbalanced['algo_name'], scores_imbalanced['predicted'], scores_imbalanced['expected'], False)
-   
-    sorted_accuracies = sorted(accuracies.items(), key= lambda kv:kv[1], reverse=True)
-    sorted_accuracies_imbalanced = sorted(accuracies_imbalanced.items(), key= lambda kv:kv[1], reverse=True)
-    #sorted_f1 = sorted(f1.items(), key= lambda kv:kv[1], reverse=True)
-    #sorted_f1_imbalanced = sorted(f1_imbalanced.items(), key= lambda kv:kv[1], reverse=True)
+    counter = 1 #1000
+    while counter > 0:
+        print("\nALL\n".center(50, '*'))
+        accuracies = {}
+        scores = wine_variety_prediction.model_the_data(X_smote_train, X_smote_test, y_smote_train, y_smote_test)
+        accuracies[scores['algo_name']] = scores['accuracy']
+        wine_variety_prediction.illusrate_the_result(scores['algo_name'], scores['predicted'], scores['expected'])
 
-    print("BALANCED CLASSES".center(50, '-'))
-    print("accuracy score")
-    for k, v in dict(sorted_accuracies).items():
-        print(f"{k} : {v}")
-    print("f1 score")
-    for k, v in dict(f1).items():
-        print(f"{k} : {v}")
-    print("\n")
-    print("IMBALANCED CLASSES".center(50, '-'))
-    print("accuracy score")
-    for k, v in dict(sorted_accuracies_imbalanced).items():
-        print(f"{k} : {v}")
-    print("\nf1 score")
-    for k, v in dict(f1_imbalanced).items():
-        print(f"{k} : {v}")
-    #algo_performances[sorted_accuracies[0][0]] += 1
-    #counter -= 1
+
+        scores = wine_variety_prediction.model_the_data(X_smote_train, X_smote_test, y_smote_train, y_smote_test, 'GaussianNB')
+        accuracies[scores['algo_name']] = scores['accuracy']
+        wine_variety_prediction.illusrate_the_result(scores['algo_name'], scores['predicted'], scores['expected'])
+        
+        scores = wine_variety_prediction.model_the_data(X_smote_train, X_smote_test, y_smote_train, y_smote_test, 'KNeighborsClassifier')
+        accuracies[scores['algo_name']] = scores['accuracy']
+        wine_variety_prediction.illusrate_the_result(scores['algo_name'], scores['predicted'], scores['expected'])
+        
+        scores = wine_variety_prediction.model_the_data(X_smote_train, X_smote_test, y_smote_train, y_smote_test, 'DecisionTreeClassifier')
+        accuracies[scores['algo_name']] = scores['accuracy']
+        wine_variety_prediction.illusrate_the_result(scores['algo_name'], scores['predicted'], scores['expected'])
+        
+        scores = wine_variety_prediction.model_the_data(X_smote_train, X_smote_test, y_smote_train, y_smote_test, 'SVC')
+        accuracies[scores['algo_name']] = scores['accuracy']
+        wine_variety_prediction.illusrate_the_result(scores['algo_name'], scores['predicted'], scores['expected'])
+        
+        sorted_accuracies = sorted(accuracies.items(), key= lambda kv:kv[1], reverse=True)
+        #print("\n\nACCURACIES\n".center(50, '*'))
+        #for k, v in dict(sorted_accuracies).items():
+        #    print(f"{k} : {v}")
+        algo_performances[sorted_accuracies[0][0]] += 1
+        counter -= 1
     
-    #sorted_algo_performances = sorted(algo_performances.items(), key= lambda kv:kv[1], reverse=True)
-    #print("MOST APPROPRIATE ALGO".center(100, '*'))
-    #for k, v in dict(sorted_algo_performances).items():
-    #    print(f"{k} : {v}")
+    sorted_algo_performances = sorted(algo_performances.items(), key= lambda kv:kv[1], reverse=True)
+    print("\n\n")
+    print("MOST APPROPRIATE ALGO".center(100, '*'))
+    for k, v in dict(sorted_algo_performances).items():
+        print(f"{k} : {v}")
 
 
     
