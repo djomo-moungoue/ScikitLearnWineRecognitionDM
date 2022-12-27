@@ -17,8 +17,9 @@ from sklearn.model_selection import train_test_split
 
 # 1. Laden der Daten
 # Laden Sie die Daten in den Arbeitsspeicher, um die Daten anschließend zu verarbeiten. 
+print("1. Loading the wine dataset ...")
 wine_bunch = load_wine()
-print("1. Wine dataset loaded ...")
+
 
 X = wine_bunch['data']
 y = wine_bunch['target']
@@ -26,35 +27,37 @@ y = wine_bunch['target']
 #2. Teilen der Daten in Training und Test
 # Bitte achten Sie auf eine zufällige Aufteilung der Daten und eine Ausgeglichenheit der Klassen, dabei sollen 70% der Daten zum Training verwendet werden.
 smote = SMOTE()
+print("2.1. Balancing the data classes ...")
 X_smote, y_smote = smote.fit_resample(X, y)
-print("1.1. Data classes balanced ...")
 
+print("2.2. Shuffling the data then splitting them in 70% training and 30% test ...")
 X_smote_train, X_smote_test, y_smote_train, y_smote_test = train_test_split(X_smote, y_smote, shuffle=True, train_size=0.7, random_state=42)
-print("1.2. Data shuffled then splitted in 70% training and 30% test ...")
+
 
 #3. Trainieren eines geeigneten Algorithmus
 # Wählen Sie einen geeigneten Algorithmus aus, um die Sorten des Weins vorherzusagen. Trainieren Sie den Algorithmus. 
 model = DecisionTreeClassifier()
-print(f"3.1. {model}'s algorithm chosen to predict wine classes ...")
+print(f"3.1. Choosing the {model}'s algorithm to predict wine classes ...")
 
+print(f"3.2. Training the {model}'s algorithm ...")
 model.fit(X_smote_train, y_smote_train)
-print(f"3.2. {model}'s algorithm trained ...")
+
 
 # 4. Testen des Algorithmus auf den Testdaten
 # Berechnen Sie mindestens ein Maß für die Genauigkeit der Vorhersage.
 expected = X_smote_test
+print(f"4.1. The {model}'s algorithm is making prediction ...")
 predicted = model.predict(X_smote_test)
-print(f"4.1. {model}'s algorithm tested ...")
 
 accuracy_score = metrics.accuracy_score(expected, predicted)
-print(f"4.2.1 {model}'s algorithm accuracy score = {accuracy_score}")
-
+print(f"4.2.1. The {model}'s algorithm accuracy score is {accuracy_score}")
 
 f1_score = metrics.f1_score(expected, predicted, average=None)
-print(f"4.2.2. {model}'s algorithm f1 score = {f1_score}")
+print(f"4.2.2. The {model}'s algorithm f1 score is {f1_score}")
 
 # 5. Illustration
 # Stellen Sie graphisch dar, wie viele Weine der jeweiligen Klasse richtig vorhergesagt wurden.
+print(f"5. Illustrating the {model}'s algorithm predictions ...")
 correct_predictions = [0, 0, 0]
 for i in range(len(predicted)):
     if predicted[i] == expected[i]:
